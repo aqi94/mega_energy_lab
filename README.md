@@ -8,9 +8,11 @@ formula**, by testing guesses against real in-game icons until one matches.
 
 ## Try it
 
-Open **[`mega_lab.html`](mega_lab.html)** in your browser. That's it — no install, no server, just
-double-click the file. You'll see the current best guess rendered next to the real reference art,
-plus sliders to tweak the color math yourself and watch it update live.
+**[Open the lab](https://aqi94.github.io/mega_energy_lab/)** — no install, no download, just click.
+You'll see the current best guess rendered next to the real reference art, plus sliders to tweak the
+color math yourself and watch it update live.
+
+(Prefer to run it locally? Download [`mega_lab.html`](mega_lab.html) and double-click it — same tool, works fully offline.)
 
 ## Where things stand
 
