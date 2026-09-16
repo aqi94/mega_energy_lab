@@ -1,0 +1,13 @@
+# This folder doubles as a standalone repo for publishing the Mega Energy color lab. Only the
+# finished, self-contained tool and the source data it was built from are tracked; everything
+# else here (build scripts, research experiments, generated renders) is local-only tooling that
+# lives in the private PoGoRankIV checkout and isn't needed to use mega_lab.html.
+#
+# `/*` anchors to top-level entries only, so `!/raw/` un-ignores the whole raw/ subtree (nothing
+# inside it is re-ignored) without needing a `raw/**` exception too.
+/*
+!/raw/
+!/mega_lab.html
+!/research_notes/
+!/.gitignore
+!/CLAUDE.md
