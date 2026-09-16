@@ -5,8 +5,6 @@ tinted a different color for every species. Niantic never explained how that col
 there's no public source code for it. **This project is trying to reverse-engineer the actual
 formula**, by testing guesses against real in-game icons until one matches.
 
-Why bother? If we can crack it, we can generate the correct-looking icon for a Mega Evolution
-*before* it's even released — instead of waiting for datamined art.
 
 ## Try it
 
