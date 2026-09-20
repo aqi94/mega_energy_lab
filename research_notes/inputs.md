@@ -1,5 +1,14 @@
 # Inputs: what the template and JSON actually mean
 
+> **Superseded in part (2026-09-20).** The real shader was recovered from the APK — see
+> `shader-source.md`. Still true below: R drives ramp position, G is the outline and goes to
+> `_GlowColor`, the JSON is a Material dump, `_EmissionColor` is a stale leftover. **Wrong below:** B does
+> not tint toward `_Color` (it lerps toward white; `_Color` multiplies the whole icon), `_EmissionColor`
+> is not a shading term (the shader never reads it), and `_GlowColor` is not a directional light (the
+> positional hue is a per-channel UV "glass" gradient). The APK's template is 256×256; the copy here is
+> 128×128. The material also carries floats the JSON lacks: `_Stop1..4`, `_GlassColor`, `_GlassTint`,
+> `_GlowIntensity`, `_GlowColorIntensity`, `_BrightnessCurve`.
+
 ## `raw/pokemon_details_mega_candy.png` (128×128 RGBA)
 
 The template is not a plain color mask — each channel is doing a different job:
@@ -44,7 +53,8 @@ game), not as something to refit.
 The `PokemonMegaCandyAkaMegaEnergy.json` values are very likely a dump of a Unity **Material**'s
 `m_SavedProperties`. `_EmissionColor` black + `_Color` white-by-default across nearly all entries
 matches the Standard-shader defaults — i.e. probably stale leftovers from a template material whose
-shader got swapped to the actual (undocumented) Mega shader, not necessarily inputs the shader reads
-directly the way their names suggest. The real shader and its `_Ramp2D` lookup textures live in an
-unpublished Unity asset bundle — **no public source documents this shader**; everything in this
-project is inferred by fitting rendered output against reference images, not derived from source.
+shader got swapped to the actual Mega shader, not necessarily inputs the shader reads directly the way
+their names suggest. *(Confirmed 2026-09-20: `_EmissionColor` is not a property of the real shader at
+all. The shader — `NianticCustom/UI/MegaCandy`, which uses no `_Ramp2D` lookup texture — ships in the
+APK and has been read; see `shader-source.md`. What is still missing is the per-species materials'
+float values, which sit in a remote bundle.)*

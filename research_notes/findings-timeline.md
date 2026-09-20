@@ -104,3 +104,45 @@ straight through unless you're doing a deep dive on one issue.
     active options. This is a judgment call about what's worth keeping in front of a user, not a new
     numerical result — treat it as reinforcing finding #8/universal rule #9 (no shared formula found
     yet generalizes), not as evidence the Venusaur fit itself generalizes to other species.
+22. **The real shader recovered from the APK** (2026-09-20; supersedes #15's "not obtainable"). Pokémon GO
+    0.429.1 ships `NianticCustom/UI/MegaCandy` in `sharedassets1.assets`, compiled to GLES3 = readable
+    GLSL. Full write-up in `shader-source.md`. Headlines: a plain 4-stop ramp over R with **stop
+    positions as material floats** (`_Stop1..4`); a per-RGB-channel UV "glass" gradient blended in by
+    `_GlassTint`; B → white by `_GlowIntensity`; G → `_GlowColor` by `_GlowColorIntensity`; an additive
+    mid-tone `_BrightnessCurve`; `_Color` is a whole-icon multiply; `_EmissionColor` is never read; the
+    project is Gamma colour space. Verified with nothing fitted on the generic icon (`MegaCandyDefault`
+    material vs `silver/GO_Mega_Energy.png`: RMSE 9.3, same icon by eye). Overturns #13's B → `_Color`,
+    the `_EmissionColor` shading mix, and #17–18's directional glow light; explains #19's plateau below
+    R ≈ 0.56 (`_Stop2 = 0.594`). **Not yet solved:** the 96 per-species materials live in a remote bundle
+    (`megacandymaterials_assets_all_*.bundle`) and PokeMiners dumped only their colours — with the default
+    material's floats the gold refs score 34.8 mean RMSE and no one float set fits every species, so each
+    species material evidently has its own stops / glass / glow values.
+23. **Lab rebuilt on the real shader** (2026-09-20, user: "regarding those unknown float values, modify the
+    mega_lab such that I can interact and tinker with it; as for the knowns, make them constant and remove
+    options to change them"). `mega_lab.html` now has one model, the recovered shader; the fitted model,
+    colour editors + eyedropper, stage toggles and shader menu are gone; the nine unknown floats are sliders
+    **per entry**, remembered in the browser, with presets, apply-to-all, undo, JSON copy, and a Fitting tab
+    limited to those floats. The lab's numbers agree with an independent script (Venusaur 30.1 both ways).
+    First result from fitting inside the real shader: **Altaria 34.3 → 11.3** by moving five floats
+    (`_Stop2` 0.53, `_Stop3` 0.61, `_Stop4` 0.84, `_GlassTint` 0.07, `_GlowIntensity` 1.0 — the last one
+    pinned at the slider's ceiling) — as good as the old model's best single-species fit, with no invented
+    terms. Treat fitted floats as estimates of the true material values, to be replaced when a dump exists.
+24. **The nine floats fitted for all 60 referenced species; which are constants** (2026-09-20, user: "fan out up to 5
+    Sonnet sub-agents to help determine the Unknown Material Floats ... determine if any of these floats happen to be
+    *almost* the same across all species"). Five agents fitted 12 species each through `window.MegaLab` (new headless
+    API, driven by `scripts/lab_driver.mjs`; every number is the lab's own shader): 3 preset + 8 random starts x
+    `_GlassColor` 0/1 per species, stops kept ordered, then profile intervals and pin tests; the poor fits got 40-64
+    extra starts and did not move (<= 0.05 RMSE), so their misfit is model/reference, not search. Result in
+    `raw/MegaCandyMaterialFloats.json` (the lab loads it; embedded copy for `file://`). Mean RMSE generic -> fitted:
+    gold 34.8 -> 12.7, silver 24.5 -> 10.3, bronze 30.7 -> 11.0 (24 good <= 10, 28 fair, 8 poor > 15; noise floor ~7).
+    **Constants, by lock test (pin the float, re-optimise the rest; median cost over the 52 fits <= 15 RMSE):**
+    `_BrightnessCurve` **0.15 - near-constant** (median cost 0.17, silver/bronze fits 0.13-0.18); `_GlassTint`
+    **~0.1 - near-constant** (adds 0.5 more); `_GlowIntensity` **~0.77 probable** (not the generic 0.56; loose);
+    `_Stop4` **~0.84 probable, weak**; `_Stop1` **not constant** (0 or 0.3-0.5); `_Stop2` (0.42-0.65, tightly
+    identified) and `_Stop3` (0.60-0.94) **vary per species**; `_GlowColorIntensity` **unidentifiable** (flat 0-1);
+    `_GlassColor` **per-species** (mode 0 wins ~25, mode 1 ~12, rest tie because tint fits ~0). Pinning all the
+    look constants at once costs a median 2.3 RMSE, so they are constant-ish, not exactly constant. **The 8 gold
+    references split from the rest:** `_BrightnessCurve` median 0.04 (gold) vs 0.16 (silver/bronze) and they fit worst -
+    supports open question #2 (older pipeline) but cannot prove it. Stop3 correlates with the Ramp3-Ramp2 lightness gap
+    (r = 0.79), so the 36 species with no reference get the constants + a colour regression for Stop1-3: leave-one-out
+    mean RMSE **20.7** vs 26.8 for the generic material (beats generic for 49 of 60) - a guess, not a fit.

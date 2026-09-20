@@ -7,8 +7,18 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 (`raw/pokemon_details_mega_candy.png`, a grayscale template whose R/G/B channels each play a
 different structural role) into the per-species icon seen in-game, using
 `raw/PokemonMegaCandyAkaMegaEnergy.json` (color data mined from the game by PokeMiners) as the only
-other input. No shader source is public — everything here is inferred by fitting rendered output
-against real reference images (`raw/standards/`).
+other input. Until 2026-09-20 everything here was inferred by fitting rendered output against real
+reference images (`raw/standards/`).
+
+**The shader itself is now known** — it was read out of the game's APK (`NianticCustom/UI/MegaCandy`;
+see `research_notes/shader-source.md`, which overrides any fitted note it contradicts) and reproduces
+the generic Mega Energy icon with nothing fitted. **What is still missing is data, not maths:** each
+species' material sets its own float values (`_Stop1..4`, `_GlassColor`, `_GlassTint`, `_GlowIntensity`,
+`_GlowColorIntensity`, `_BrightnessCurve`), those materials live in a remote bundle, and the PokeMiners
+JSON dumped only their colours. `mega_lab.html` now runs this shader: everything known (the maths, its
+constants, the JSON colours) is fixed and read-only, and the only controls are those nine unknown floats,
+kept **per entry**. **Estimated values now ship** in `raw/MegaCandyMaterialFloats.json` (2026-09-20, finding #24:
+fitted per species against the references, or inferred where there is no reference) — estimates, not the game's numbers.
 
 **The fit is currently far from perfect and inconsistent from species to species** — no single
 formula tried so far reproduces the reference art exactly, and some species fit far better than
@@ -21,46 +31,60 @@ session's task is narrow (e.g. a UI tweak to `mega_lab.html`) — it's why the t
 has already happened; the goal is to build on it, not repeat it.
 
 ## Universal rules (high confidence — treat as settled unless you find contradicting evidence)
-These held up across many independent findings (see `research_notes/findings-timeline.md` for the
-evidence behind each). Model-specific parameters and layouts are *not* settled and change often —
-these are the load-bearing facts underneath all of them:
+Rules 1–7 were revised on 2026-09-20 against the recovered shader (`research_notes/shader-source.md`);
+the struck-through claims came from image fitting and are wrong. Rules 8–9 are still fitting-era
+judgement (see `research_notes/findings-timeline.md` for the evidence behind each):
 
-1. **Template R drives ramp position**, dominantly. Recovered ramp position regresses on R with
-   r² = 0.93, confirmed multiple independent ways. Reach for R first; only add spatial (x/y) or other
-   geometry terms when there's specific evidence R alone can't explain something.
-2. **Template channel roles are fixed:** R = shading/ramp position; B (helix emblem + specular
-   streak) tints toward `_Color`; G (thin outline) tints toward `_GlowColor`.
-3. **`_EmissionColor` (always black in the data) is the dark end of the shading mix**
-   (`mix(_EmissionColor, ramp, b·R)`), not a background canvas behind the alpha.
-4. **`_GlowColor` also acts as a positional light blended into the ramp itself** from one side of
-   the icon (direction varies per species) — not an additive/screen glow overlay.
-5. **Colors composite in sRGB, not linear light.** Linear mixing, overlay, and soft-light blends all
-   push results toward gray.
-6. **Tone must be multiplicative (a stop's chromaticity scaled by an R-driven gain), not additive
-   white-lift.** Additive lift is what caused the early "washed out" look everyone rejected.
-7. **No public source for the real shader exists** — it and its ramp lookup textures live in an
-   unpublished asset bundle. Nothing here is derived from source; it's all fit-to-reference-images.
+1. **Template R drives ramp position — exactly.** The ramp is a plain 4-stop gradient over R with each
+   segment clamped; the stop positions are material floats `_Stop1..4` (generic icon: 0 · 0.594 · 0.78 ·
+   0.806; shader default 0 · 0.3 · 0.6 · 1). There is no x/y term in the ramp.
+2. **Template channel roles are fixed:** R = ramp position; B (helix emblem + specular streak) lerps
+   toward **white** by `_GlowIntensity` (~~toward `_Color`~~); G (thin outline) lerps toward `_GlowColor`
+   by `_GlowColorIntensity` and also adds to alpha. `_Color` multiplies the whole icon.
+3. **`_EmissionColor` is never read** — it is not a property of the shader (~~the dark end of a shading
+   mix~~). The dark body colour is `_RampColor2` itself.
+4. **Position-dependent hue comes from the "glass" layer**, a fixed per-RGB-channel UV gradient (red
+   rises left→right, green bottom→top, blue falls off from the bottom-left corner) blended into the ramp
+   colour by `_GlassTint` (~~`_GlowColor` as a directional light whose direction varies per species~~).
+   `_GlassColor` = 1 rotates it; that is the only direction switch.
+5. **Colors composite in sRGB, not linear light** — confirmed: the project's colour space is Gamma.
+6. **Tone = the glass blend + an additive mid-tone parabola** `_BrightnessCurve · (1 − (2c − 1)²)`
+   (~~a multiplicative R-driven gain~~). There is no gain or exposure term.
+7. **The shader ships in the APK and has been read** (~~no source exists~~). It uses no lookup texture.
+   The decompiled listing is Niantic's code: keep it out of this public repo — notes restate the maths.
+   The per-species *material floats* are the part still unobtained (remote bundle).
 8. **Fit against gold-tier references, and weight the loss toward gold** (see
    `research_notes/reference-tiers.md`) — unweighted error across all reference tiers biases toward
    gray/washed-out results, because lower tiers outnumber and are less reliable than gold.
 9. **A single shared formula across all species tops out far worse (RMSE ~24–30) than fitting each
    species individually (RMSE ~10–18).** Per-species variation is real signal, not noise — don't
-   assume one fixed set of constants should work everywhere.
+   assume one fixed set of constants should work everywhere. (Now explained: every species has its own
+   material, so its stops / glass / glow floats can differ. If you must fit, fit *those nine floats
+   inside the real shader* — do not add new model terms.)
 
-**Current default caveat:** `mega_lab.html` currently ships only one model, with knobs fitted to the
-Venusaur standard (RMSE 11.7) — every other attempt tried so far (the gold-wide shared fit, the
-universal per-pixel weight map) was judged a failed experiment by eye and removed. That means the
-shipped default is a **single-species fit kept as a starting point**, not a validated general
-solution — see rule #9. Don't extend or promote it to other species without checking by eye first.
+**What `mega_lab.html` ships (since 2026-09-20):** one model — the real shader — with every entry
+starting at its **estimated** floats from `raw/MegaCandyMaterialFloats.json` (fetched over http, embedded snapshot on
+`file://`; regenerate the snapshot with `scripts/embed_floats.py`; layering: generic material < estimate < the user's
+slider edits; the header's "Δ vs generic" shows the gain; edits live in localStorage `megaLab.floats2` as differences from the estimate — the pre-estimate key `megaLab.floats` is set aside as `floatsLegacy`, since read as edits on top of the estimate it hid the fitted values). Before that every entry started at the generic material's floats (`MegaCandyDefault`: stops 0 / 0.594 / 0.78 / 0.806, glass tint
+0.1, glow 0.56 / 0.5, curve 0.15). Those starting values are *known for the generic icon only*; for a
+species they are a guess until its material is dumped. The earlier fitted model (Venusaur fit, RMSE 11.7)
+and its colour editors, stage toggles and shader menu were removed: they modelled things the real shader
+does not do. **Do not add controls for known quantities** (colours, glass constants, blend maths) — the
+user asked for those to be constants.
 
 ## Commands
 There is no build step. Open `mega_lab.html` directly in a browser — double-click it, or
 `file://` it — and use it. All "development" on the model itself happens live on the page:
 - **Lab tab → Color space / Transect / Feature map** — visualize the recolor model against the
   embedded references.
-- **Lab tab → Fitting** — adjust ramp-color sliders per entry (or run coordinate-descent auto-fit
-  against gold/silver/bronze references) and see the result immediately; Undo restores.
-- **Colour table tab** — every species' fitted colors in one sortable table.
+- **Lab tab → Unknown · material floats** (left column) — nine sliders named after the Unity properties,
+  for the *current entry only*; each entry keeps its own values (remembered in `localStorage` under
+  `megaLab.floats`). Presets: Generic material / Even stops / Shader defaults. Apply to all entries,
+  Reset this / all, Undo, Copy this entry / Copy all changed (JSON keyed like the colour file).
+- **Lab tab → Fitting** — coordinate descent over the checked floats: "This entry" stores the result in
+  that entry; the shared targets fit one set and apply it to every entry; "Fit each reference separately"
+  + "Apply each fit to its entry" fits all references from their own values. Undo restores.
+- **Colour table tab** — every species' material colours (from the JSON) in one table.
 - **Output folder… / Save PNG / Render all…** (top toolbar) — renders the current shader +
   parameters to a real PNG, named like the reference images
   (`GO_<Species>_Mega_Energy[_X|_Y|_Z].png`). "Save PNG" does the current entry; "Render all…" does
@@ -71,9 +95,11 @@ Nothing else typed into the page persists back to this repo — it's a scratchpa
 now rendering) the model, not an editor that writes source files.
 
 ## Architecture
-- `mega_lab.html` — the whole tool. Generated (not hand-edited): the page shell's JS/CSS is authored
-  elsewhere and the data below is baked in as inline JSON/`data:` URIs at build time, so this one
-  file has zero external references and works fully offline.
+- `mega_lab.html` — the whole tool, one self-contained file (inline JSON + `data:` URIs, no external
+  references, works offline). It was originally generated by build tooling that no longer exists, so it
+  is now **edited by hand** — the script is one classic `<script>` IIFE after a single ~1.8 MB data line
+  (never print that line; search by function name). The shader is `MODELS.megaCandy`; keep its maths
+  identical to `research_notes/shader-source.md`.
 - `raw/` — the source inputs the page was built from, kept for provenance and reproducibility:
   - `pokemon_details_mega_candy.png` — the grayscale RGB-channel template art (see "Universal rules"
     for what each channel means).
@@ -87,11 +113,9 @@ now rendering) the model, not an editor that writes source files.
   this when you learn something new; don't just leave it in your own session's memory.
 
 ## Scope notes
-- The recolor model itself (ramp compositing, universal weight map, fitting math) is not documented
-  field-by-field here because it isn't source in this repo — it's baked into `mega_lab.html`'s
-  embedded JS. Read that file directly if you need the implementation (it's a single classic
-  `<script>`, wrapped in one IIFE), or treat the page's own UI (hover states, the "Render pipeline
-  at this pixel" breakdown, the Fitting tab's notes) as the documentation.
-- If `mega_lab.html` looks stale relative to `raw/` or `research_notes/`, that means the private
-  monorepo's copy moved on and this repo hasn't been re-published yet — regenerating it requires the
-  build tooling that lives there, not anything in this repo.
+- The shader maths is documented in `research_notes/shader-source.md`; the page's own UI (the "Render
+  pipeline at this pixel" breakdown, the Shader components grid, slider tooltips) shows it per pixel.
+- The lab renders at the repo's 128 px template and uses the shader's own alpha
+  (`sat(A + G·_GlowColorIntensity)·A`). The APK's template is 256 px; it is not embedded.
+- To test a page change without the browser extension: serve the folder (`python -m http.server`) and drive
+  headless Edge over its debugging port — file URLs and clicks both work that way.
