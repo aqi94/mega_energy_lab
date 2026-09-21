@@ -180,3 +180,36 @@ straight through unless you're doing a deep dive on one issue.
     references may share a source that is off. Now 62 fitted (7 gold / 47 silver / 8 bronze) and 34 inferred; mean RMSE generic ->
     fitted 35.4 -> 12.5 / 23.4 -> 9.5 / 29.4 -> 9.2; 30 fits <= 10, 26 <= 15, 6 above 15 (unchanged list). Constants unchanged
     (`_BrightnessCurve` median 0.156, MAD 0.013; pin costs a median 0.13). Guess for unreferenced entries: LOO mean 19.9 vs 25.5 generic.
+28. **Reference provenance from PNG metadata** (2026-09-20, user: the blog images carry imagemagick.org in their metadata and
+    were used for the gold standard). Parsing the PNG text chunks: all 7 gold and 5 silver references (legacy Charizard,
+    Abomasnow, Ampharos, Gyarados, Lopunny) carry `software: https://imagemagick.org` and `Thumb::URI ... /tmp/thumblr/...`
+    (a wiki thumbnailer), created 2020-10-15 .. 2021-05-03; the current `GO_Mega_Energy.png` (2021-06-08) too. Other groups:
+    Adobe XMP (13), sRGB-tagged (6), EXIF (5), no metadata (21), cleaned in-game screenshots (5). The 12 ImageMagick references
+    fit worst on average (12.3 vs 5-10) and 9 of 12 fit `_BrightnessCurve` < 0.1 (0 of the other 49; median 0.082 vs 0.153-0.174),
+    5 of 12 fit `_Stop1` = 0. It is NOT a simple tone or blur artifact: for the generic icon the true material is known, and the
+    old generic image (no metadata) matches it at RMSE 7.2 with the curve minimum exactly at the true 0.15, while the ImageMagick
+    generic image scores 26.6 and no curve, blur (sigma 0-2.5), gamma or per-channel affine correction brings it below ~22. More
+    likely these are older-client renders (Oct 2020 - May 2021) of a material / shader that has since changed (the shader was
+    read from build 0.429.1): fitted curve rises with the thumbnail date (Oct 2020 refs 0.00-0.09 with `_Stop1` = 0 in 4 of 5;
+    Spearman 0.55, p = 0.06, n = 12 - suggestive, not proven). Consequence: "gold" is a misnomer for the current game;
+    those references should be replaced by current in-game screenshots (worst first: Pidgeot, Ampharos, Venusaur, Lopunny,
+    Charizard, Beedrill, Gengar) or kept out of the constants statistics; the old generic image, not the ImageMagick one, is
+    the valid check of the recovered default material.
+    **Direct test (Venusaur, in-game screenshot vs the gold thumbnail, 2020-10-15):** the cleaned screenshot differs from the
+    gold image by RMSE 38 (gold is a saturated teal-green with a purple base, mean luma 163 / std 36; the screenshot is a pale
+    pastel with a pink rim, luma 194 / std 25). The screenshot fits at RMSE 5.97 (noise floor) with `_BrightnessCurve` 0.169
+    (interval 0.167-0.169), `_GlassTint` 0.15, `_GlowIntensity` 0.84, stops 0.417 / 0.632 / 0.732 / 0.838 - a main-cohort
+    material. The gold fit (14.9) had curve 0, `_Stop1` 0.225, glow 0.59, `_GlowColorIntensity` 0. The gold-fitted floats score
+    35.9 against the screenshot; changing only their curve to 0.15 gives 14.7. So the gold thumbnail is a render of an older
+    build (no mid-tone brightening), not a bad crop; every gold-derived float for it was wrong.
+    **Replacement (2026-09-20, later):** screenshots of Venusaur, Beedrill, Gengar, Lopunny and Pidgeot were cleaned and
+    installed as silver (Beedrill, Gengar, Pidgeot, Venusaur were gold), and all five refit at the noise floor: Venusaur
+    5.97 (was 14.9), Beedrill 5.70 (12.0), Pidgeot 5.30 (17.3), Gengar 4.01 (12.0), Lopunny 4.97 (14.3). Their fitted
+    `_BrightnessCurve` is 0.144-0.169 (was 0.00-0.08 for the thumbnails) and every one lands in the main cohort. Now 62 fitted
+    (3 gold / 51 silver / 8 bronze); mean RMSE generic -> fitted 31.0 -> 10.3 / 23.6 -> 9.0 / 29.4 -> 9.2; 35 fits <= 10, 57 <= 15,
+    5 above 15 (Aerodactyl, Gallade, Ampharos, Alakazam, Falinks). Curve median 0.156 (MAD 0.011) over the 57 fits <= 15, pin
+    cost median 0.08 (cumulative curve+tint+glow pins: 0.55); tint 0.089, glow 0.781 - verdicts unchanged. Seven ImageMagick
+    thumbnails remain (Altaria, Houndoom, Manectric gold; Charizard, Abomasnow, Ampharos, Gyarados silver): curve 0.02-0.16,
+    median 0.09. Guess for unreferenced entries: LOO mean 18.7 (was 19.9) vs 24.7 for the generic material. Lesson: the
+    "gold" tier was the least trustworthy one, and the constants were already visible through it; cleaner references only
+    sharpen them.

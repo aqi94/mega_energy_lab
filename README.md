@@ -28,12 +28,12 @@ entries (62 fitted, 34 guessed), and the lab starts every entry from it. They ar
 
 | | species | error with the generic material | error with the fitted estimate |
 |---|---|---|---|
-| gold references | 7 | 35.4 | 12.5 |
-| silver references | 47 | 23.4 | 9.5 |
+| gold references | 3 | 31.0 | 10.3 |
+| silver references | 51 | 23.6 | 9.0 |
 | bronze references | 8 | 29.4 | 9.2 |
 
-Error is RMSE in 0–255 color levels over the pixels both images cover; about 7 is the noise floor. 30
-species fit within 10, 26 within 15, and 6 are still above 15: Aerodactyl, Pidgeot, Gallade, Ampharos,
+Error is RMSE in 0–255 color levels over the pixels both images cover; about 7 is the noise floor. 35
+species fit within 10, 57 within 15, and 5 are still above 15: Aerodactyl, Gallade, Ampharos,
 Alakazam and Falinks. Neighbouring stops are kept at least 0.1 apart in every fit (that costs almost
 nothing: 0.06 RMSE on average).
 
@@ -46,14 +46,17 @@ JSON lists a verdict for each.
 
 **The 34 entries with no reference image** get a guess: the constants above plus stop positions predicted
 from the entry's own ramp colors. Tested by leaving each referenced species out in turn, that guess
-averages an error of about 20, against 25 for the generic material. Treat it as a starting point.
+averages an error of about 19, against 25 for the generic material. Treat it as a starting point.
 
-**The references matter most.** Five of them (Blastoise, Steelix, Malamar, Staraptor, Garchomp) were replaced with
-cleaned-up in-game screenshots — the earlier images did not match the in-game render — and all five then
-fit at 4.5–6, right at the noise floor. The remaining poor fits are the first
-candidates for the same treatment. The seven gold references also disagree with the rest of the set
-(their fitted `_BrightnessCurve` is around 0.04 instead of 0.16), which is what an older or different
-image source would look like.
+**The references matter most.** Ten of them (Blastoise, Steelix, Malamar, Staraptor, Garchomp, Venusaur,
+Beedrill, Gengar, Lopunny, Pidgeot) were replaced with cleaned-up in-game screenshots — the earlier images
+did not match the in-game render — and all ten then fit at 4–6, right at the noise floor. The old Venusaur
+"gold" image differed from its screenshot by 38 RMSE (saturated teal against pale pastel), and fitting the
+screenshot moved `_BrightnessCurve` from 0 to 0.17. The old images were wiki thumbnails made with
+ImageMagick in 2020–21, i.e. renders from older builds of the game. Seven such thumbnails remain (Altaria,
+Houndoom, Manectric, Charizard, Abomasnow, Ampharos, Gyarados); their fitted `_BrightnessCurve` is around 0.09
+where every in-game screenshot gives 0.14–0.17. They and the remaining poor fits are the first candidates
+for replacement.
 
 ## Using the lab
 

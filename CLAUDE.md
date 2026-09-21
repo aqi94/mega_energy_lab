@@ -53,9 +53,10 @@ judgement (see `research_notes/findings-timeline.md` for the evidence behind eac
 7. **The shader ships in the APK and has been read** (~~no source exists~~). It uses no lookup texture.
    The decompiled listing is Niantic's code: keep it out of this public repo — notes restate the maths.
    The per-species *material floats* are the part still unobtained (remote bundle).
-8. **Fit against gold-tier references, and weight the loss toward gold** (see
-   `research_notes/reference-tiers.md`) — unweighted error across all reference tiers biases toward
-   gray/washed-out results, because lower tiers outnumber and are less reliable than gold.
+8. **Trust cleaned in-game screenshots most; treat wiki / blog thumbnails with caution.** The old "gold" tier turned out to
+   be ImageMagick thumbnails of older game builds (finding #28: Venusaur's differed from its screenshot by RMSE 38 and
+   wanted `_BrightnessCurve` 0 instead of 0.17). Check a reference's PNG metadata before weighting it, and do not let
+   thumbnails drive constants (`research_notes/reference-tiers.md` predates this).
 9. **A single shared formula across all species tops out far worse (RMSE ~24–30) than fitting each
    species individually (RMSE ~10–18).** Per-species variation is real signal, not noise — don't
    assume one fixed set of constants should work everywhere. (Now explained: every species has its own
