@@ -127,7 +127,7 @@ straight through unless you're doing a deep dive on one issue.
     (`_Stop2` 0.53, `_Stop3` 0.61, `_Stop4` 0.84, `_GlassTint` 0.07, `_GlowIntensity` 1.0 — the last one
     pinned at the slider's ceiling) — as good as the old model's best single-species fit, with no invented
     terms. Treat fitted floats as estimates of the true material values, to be replaced when a dump exists.
-24. **The nine floats fitted for all 60 referenced species; which are constants** (2026-09-20, user: "fan out up to 5
+24. **The nine floats fitted for all 60 referenced species; which are constants** (numbers as of the first fit; see #25 for the updated ones) (2026-09-20, user: "fan out up to 5
     Sonnet sub-agents to help determine the Unknown Material Floats ... determine if any of these floats happen to be
     *almost* the same across all species"). Five agents fitted 12 species each through `window.MegaLab` (new headless
     API, driven by `scripts/lab_driver.mjs`; every number is the lab's own shader): 3 preset + 8 random starts x
@@ -146,3 +146,18 @@ straight through unless you're doing a deep dive on one issue.
     supports open question #2 (older pipeline) but cannot prove it. Stop3 correlates with the Ramp3-Ramp2 lightness gap
     (r = 0.79), so the 36 species with no reference get the constants + a colour regression for Stop1-3: leave-one-out
     mean RMSE **20.7** vs 26.8 for the generic material (beats generic for 49 of 60) - a guess, not a fit.
+25. **Blog images replaced by cleaned in-game screenshots** (2026-09-20, user: Blastoise and Steelix looked off; both
+    references came from official blogs, and the in-game render was visibly different - Blastoise has more blue on the
+    right edge, Steelix was "jarring"; Malamar was also poor). Three in-game screenshots (not kept in the repo) were cut out of the dimmed
+    UI, registered to the template (affine on the silhouette, then a smooth mesh warp guided by the emblem edges to absorb
+    the wiggle animation; max ~2 template px), sampled with 4x supersampling and written as 128 px silver standards with
+    the template's own alpha (rim pixels that blended with the background are refilled from the nearest interior colour).
+    Against the generic material they score Steelix 36.4 -> 14.2, Blastoise 30.7 -> 23.7, Malamar ~43 -> 20.1; **refitted,
+    all three land at the noise floor** (Steelix 4.2, Blastoise 5.2, Malamar 5.5, down from 21.8 / 14.5 / 13.2) with floats
+    inside the common cluster (stops ~0.4 / 0.6 / 0.78, tint ~0.06, glow ~0.8, curve ~0.16). So the bad fits were bad
+    references, not the model. Blastoise moved from gold to silver (gold is now 7 refs); Malamar's best set wants glass mode 1
+    and `_GlowColorIntensity` at 1 (identified, at the bound). Updated numbers: mean RMSE generic -> fitted gold(7) 35.4 -> 12.5,
+    silver(44) 23.5 -> 9.6, bronze(9) 30.7 -> 11.0; 27 fits <= 10, 26 <= 15, 7 above 15 (Garchomp, Aerodactyl, Pidgeot,
+    Gallade, Alakazam, Ampharos, Falinks). `_BrightnessCurve` median 0.155 (MAD 0.012, 53 fits) - pinning it at 0.15 costs a
+    median 0.10 RMSE; the 7 gold refs still fit ~0.04. The colour-regression guess for unreferenced entries averages 19.8
+    (leave-one-out) vs 25.9 for the generic material. Any remaining poor reference is a candidate for the same treatment.

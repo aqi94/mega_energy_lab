@@ -1,10 +1,36 @@
 {
  "_meta": {
   "generated": "2026-09-20",
-  "caveat": "ESTIMATES, not the game's real material values (those live in a remote bundle nobody has dumped). status 'fitted' = least-squares fit of the real shader against that species' in-game reference (RMSE 0-255 over opaque pixels; noise floor ~7); status 'inferred' = a guess for species with no reference image.",
-  "method": "5 parallel fit shards over the 60 referenced entries: the lab's own coordinate descent from 3 preset + 8 random starts x _GlassColor 0/1 (+ extra restarts for the poor fits), stops kept ordered; then profile intervals (ci = span within +0.5 RMSE, others held) and pin tests. Constants judged by lock test: pin a float, re-optimise the rest, compare RMSE.",
+  "caveat": "Estimates fitted to in-game reference images, not the game's real material values. status 'fitted' = fit to that species' reference; 'inferred' = guess for species without one.",
+  "counts": {
+   "entries": 96,
+   "fitted": 60,
+   "inferred": 36,
+   "quality": {
+    "good": 27,
+    "fair": 26,
+    "poor": 7
+   }
+  },
+  "tierMeans": {
+   "gold": {
+    "n": 7,
+    "generic": 35.38,
+    "fitted": 12.463
+   },
+   "silver": {
+    "n": 44,
+    "generic": 23.453,
+    "fitted": 9.594
+   },
+   "bronze": {
+    "n": 9,
+    "generic": 30.712,
+    "fitted": 11.046
+   }
+  },
   "inference": {
-   "for": "36 entries without a reference",
+   "for": "entries without a reference",
    "constants": {
     "_BrightnessCurve": 0.15,
     "_GlassTint": 0.1,
@@ -16,178 +42,118 @@
    "regression": {
     "_Stop1": {
      "feature": "L3",
-     "slope": 0.4428,
-     "intercept": 0.002
+     "slope": 0.5102,
+     "intercept": -0.0356
     },
     "_Stop2": {
      "feature": "L3",
-     "slope": 0.1218,
-     "intercept": 0.4955
+     "slope": 0.1308,
+     "intercept": 0.4893
     },
     "_Stop3": {
      "feature": "d32",
-     "slope": 0.4189,
-     "intercept": 0.617
+     "slope": 0.4088,
+     "intercept": 0.6216
     }
    },
-   "note": "Stop1/Stop2/Stop3 by linear regression on the Rec.601 luma of the JSON ramp colours, fitted on the 52 fits <= 15 RMSE. Leave-one-out mean RMSE over the 60 referenced species: 20.728 (generic material 26.8, median-only inference 25.0, free fit 10.7)."
-  },
-  "counts": {
-   "entries": 96,
-   "fitted": 60,
-   "inferred": 36,
-   "quality": {
-    "good": 24,
-    "fair": 28,
-    "poor": 8
-   }
-  },
-  "tierMeans": {
-   "gold": {
-    "n": 8,
-    "generic": 34.8,
-    "fitted": 12.715
-   },
-   "silver": {
-    "n": 43,
-    "generic": 24.496,
-    "fitted": 10.284
-   },
-   "bronze": {
-    "n": 9,
-    "generic": 30.712,
-    "fitted": 11.046
-   }
-  },
-  "goldSplit": {
-   "note": "The 8 gold references disagree with the 52 silver/bronze ones: _BrightnessCurve median 0.041 vs 0.161, and they fit worst. Consistent with open question #2 (gold refs from an older render pipeline), or a real material difference; images alone cannot tell.",
-   "goldCurve": {
-    "median": 0.041,
-    "mad": 0.041,
-    "min": 0,
-    "max": 0.152,
-    "n": 8
-   },
-   "silverBronzeCurve": {
-    "median": 0.161,
-    "mad": 0.012,
-    "min": 0,
-    "max": 0.343,
-    "n": 52
-   }
+   "expectedRmse": 19.777
   },
   "floatStats": {
    "_Stop1": {
-    "median": 0.338,
-    "mad": 0.088,
-    "min": 0,
-    "max": 0.516,
-    "n": 52
+    "median": 0.339,
+    "mad": 0.087,
+    "n": 53
    },
    "_Stop2": {
     "median": 0.579,
     "mad": 0.035,
-    "min": 0.423,
-    "max": 0.646,
-    "n": 52
+    "n": 53
    },
    "_Stop3": {
-    "median": 0.752,
-    "mad": 0.034,
-    "min": 0.6,
-    "max": 0.939,
-    "n": 52
+    "median": 0.755,
+    "mad": 0.031,
+    "n": 53
    },
    "_Stop4": {
-    "median": 0.844,
-    "mad": 0.019,
-    "min": 0.787,
-    "max": 1,
-    "n": 52
+    "median": 0.843,
+    "mad": 0.018,
+    "n": 53
    },
    "_GlassColor": {
     "median": 0,
     "mad": 0,
-    "min": 0,
-    "max": 1,
-    "n": 52
+    "n": 53
    },
    "_GlassTint": {
-    "median": 0.09,
-    "mad": 0.029,
-    "min": 0,
-    "max": 0.248,
-    "n": 52
+    "median": 0.089,
+    "mad": 0.03,
+    "n": 53
    },
    "_GlowIntensity": {
     "median": 0.77,
-    "mad": 0.071,
-    "min": 0.412,
-    "max": 1,
-    "n": 52
+    "mad": 0.047,
+    "n": 53
    },
    "_GlowColorIntensity": {
-    "median": 0.52,
+    "median": 0.516,
     "mad": 0.259,
-    "min": 0,
-    "max": 1,
-    "n": 52
+    "n": 53
    },
    "_BrightnessCurve": {
-    "median": 0.154,
-    "mad": 0.016,
-    "min": 0,
-    "max": 0.329,
-    "n": 52
+    "median": 0.155,
+    "mad": 0.012,
+    "n": 53
    }
   },
-  "floatStatsNote": "over the fitted entries with RMSE <= 15"
+  "curveByTier": {
+   "gold": {
+    "median": 0.035,
+    "mad": 0.035,
+    "n": 7
+   },
+   "silverBronze": {
+    "median": 0.157,
+    "mad": 0.012,
+    "n": 53
+   }
+  }
  },
  "constants": {
   "_BrightnessCurve": {
    "value": 0.15,
-   "verdict": "near-constant",
-   "note": "Silver/bronze fits cluster at 0.13-0.18; pinning at 0.15 costs a median 0.17 RMSE over the 52 fits <= 15 (33 of 52 under 0.5). Outliers are mostly the poor fits and the gold references."
+   "verdict": "near-constant"
   },
   "_GlassTint": {
    "value": 0.1,
-   "verdict": "near-constant",
-   "note": "Median 0.09; pinning tint 0.1 and curve 0.15 together costs a median 0.7 RMSE (52 fits). Some species fit 0 (glass layer off)."
+   "verdict": "near-constant"
   },
   "_GlowIntensity": {
    "value": 0.77,
-   "verdict": "probable-weak",
-   "note": "Median 0.77, well above the generic 0.56, but only loosely identified (profile intervals often ~0.5 wide)."
+   "verdict": "probable"
   },
   "_Stop4": {
    "value": 0.84,
-   "verdict": "probable-weak",
-   "note": "Fits sit at 0.80-0.90 and are often flat from 0.85 to 1; identified mainly from below."
+   "verdict": "probable"
   },
   "_Stop1": {
    "value": null,
-   "verdict": "varies",
-   "note": "Bimodal: 0 (in ~13 fits) or 0.3-0.5 (most); not the generic 0 for the clean fits. Pinning at 0.40 costs a median 0.8 RMSE on top of the other pins."
+   "verdict": "varies"
   },
   "_Stop2": {
    "value": null,
-   "verdict": "varies (narrow)",
-   "note": "Tightly identified per species (interval ~0.02) but spans 0.42-0.65; only weakly predicted by the ramp colours."
+   "verdict": "varies"
   },
   "_Stop3": {
    "value": null,
-   "verdict": "varies",
-   "note": "Tightly identified per species, spans 0.60-0.94; correlates with the lightness gap Ramp3-Ramp2 (r = 0.79 on the 34 fits <= 12)."
+   "verdict": "varies"
   },
   "_GlowColorIntensity": {
-   "value": 0.5,
-   "verdict": "unidentifiable",
-   "note": "Profile intervals span 0-1 in most species and 0.5 costs <= 1 RMSE nearly everywhere; fits hit both bounds. 0.5 is the generic value, not a finding."
+   "value": null,
+   "verdict": "unidentifiable"
   },
   "_GlassColor": {
-   "value": 0,
-   "verdict": "undecided",
-   "note": "Mode 0 wins clearly for ~25 species, mode 1 for ~12, the rest tie (often because _GlassTint fits ~0, so the glass layer is off). Likely a per-species switch, not a global constant."
+   "value": null,
+   "verdict": "per-species"
   }
  },
  "entries": {
@@ -251,12 +217,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.2909,
-   "_Stop2": 0.575,
-   "_Stop3": 0.7187,
+   "_Stop1": 0.2973,
+   "_Stop2": 0.5746,
+   "_Stop3": 0.7208,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0006_MEGA_X": {
@@ -366,54 +332,55 @@
    }
   },
   "0009": {
-   "_Stop1": 0,
-   "_Stop2": 0.6016,
-   "_Stop3": 0.7703,
-   "_Stop4": 0.8703,
+   "_Stop1": 0.4336,
+   "_Stop2": 0.6177,
+   "_Stop3": 0.7817,
+   "_Stop4": 0.8374,
    "_GlassColor": 0,
-   "_GlassTint": 0.0328,
-   "_GlowIntensity": 0.5406,
-   "_GlowColorIntensity": 0,
-   "_BrightnessCurve": 0.0484,
+   "_GlassTint": 0.0531,
+   "_GlowIntensity": 0.8112,
+   "_GlowColorIntensity": 0.4766,
+   "_BrightnessCurve": 0.1571,
    "_fit": {
     "status": "fitted",
-    "tier": "gold",
-    "quality": "fair",
-    "rmse": 14.479,
-    "rmseGeneric": 30.736,
-    "glassMargin": 0.159,
+    "tier": "silver",
+    "reference": "screenshot",
+    "quality": "good",
+    "rmse": 5.16,
+    "rmseGeneric": 23.727,
+    "glassMargin": 0.875,
     "ci": {
      "_Stop1": [
-      0,
-      0.117
+      0.417,
+      0.45
      ],
      "_Stop2": [
-      0.6,
-      0.602
+      0.617,
+      0.618
      ],
      "_Stop3": [
-      0.767,
+      0.782,
       0.783
      ],
      "_Stop4": [
-      0.8,
+      0.783,
       1
      ],
      "_GlassTint": [
-      0,
-      0.067
+      0.017,
+      0.083
      ],
      "_GlowIntensity": [
-      0.25,
-      0.8
+      0.617,
+      1
      ],
      "_GlowColorIntensity": [
       0,
-      0.317
+      1
      ],
      "_BrightnessCurve": [
-      0.033,
-      0.05
+      0.15,
+      0.167
      ]
     }
    }
@@ -637,12 +604,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.2643,
-   "_Stop2": 0.5676,
-   "_Stop3": 0.7173,
+   "_Stop1": 0.2666,
+   "_Stop2": 0.5668,
+   "_Stop3": 0.7195,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0065": {
@@ -1182,12 +1149,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.3506,
-   "_Stop2": 0.5914,
-   "_Stop3": 0.8019,
+   "_Stop1": 0.3661,
+   "_Stop2": 0.5923,
+   "_Stop3": 0.802,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0150_MEGA_X": {
@@ -1303,12 +1270,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.2765,
-   "_Stop2": 0.571,
-   "_Stop3": 0.7103,
+   "_Stop1": 0.2807,
+   "_Stop2": 0.5704,
+   "_Stop3": 0.7126,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0160": {
@@ -1318,12 +1285,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.2376,
-   "_Stop2": 0.5603,
-   "_Stop3": 0.6783,
+   "_Stop1": 0.2358,
+   "_Stop2": 0.5589,
+   "_Stop3": 0.6815,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0181": {
@@ -1380,45 +1347,46 @@
    }
   },
   "0208": {
-   "_Stop1": 0,
-   "_Stop2": 0.6445,
-   "_Stop3": 0.7677,
-   "_Stop4": 0.841,
+   "_Stop1": 0.3891,
+   "_Stop2": 0.6016,
+   "_Stop3": 0.775,
+   "_Stop4": 0.8094,
    "_GlassColor": 0,
-   "_GlassTint": 0,
-   "_GlowIntensity": 0.8875,
-   "_GlowColorIntensity": 0.3296,
-   "_BrightnessCurve": 0.3427,
+   "_GlassTint": 0.0625,
+   "_GlowIntensity": 0.7641,
+   "_GlowColorIntensity": 0.2562,
+   "_BrightnessCurve": 0.1703,
    "_fit": {
     "status": "fitted",
     "tier": "silver",
-    "quality": "poor",
-    "rmse": 21.777,
-    "rmseGeneric": 36.367,
-    "glassMargin": 0,
+    "reference": "screenshot",
+    "quality": "good",
+    "rmse": 4.217,
+    "rmseGeneric": 14.212,
+    "glassMargin": 0.889,
     "ci": {
      "_Stop1": [
-      0,
-      0.2
+      0.367,
+      0.417
      ],
      "_Stop2": [
-      0.633,
-      0.65
+      0.6,
+      0.602
      ],
      "_Stop3": [
-      0.733,
-      0.8
+      0.767,
+      0.783
      ],
      "_Stop4": [
       0.783,
       1
      ],
      "_GlassTint": [
-      0,
-      0.083
+      0.033,
+      0.1
      ],
      "_GlowIntensity": [
-      0.45,
+      0.517,
       1
      ],
      "_GlowColorIntensity": [
@@ -1426,8 +1394,8 @@
       1
      ],
      "_BrightnessCurve": [
-      0.333,
-      0.367
+      0.167,
+      0.17
      ]
     }
    }
@@ -2393,12 +2361,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.37,
-   "_Stop2": 0.5967,
-   "_Stop3": 0.7541,
+   "_Stop1": 0.3884,
+   "_Stop2": 0.598,
+   "_Stop3": 0.7554,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0359": {
@@ -2726,12 +2694,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.4448,
-   "_Stop2": 0.6171,
-   "_Stop3": 0.6171,
+   "_Stop1": 0.4746,
+   "_Stop2": 0.6201,
+   "_Stop3": 0.6216,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0383": {
@@ -2741,12 +2709,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.4448,
-   "_Stop2": 0.6171,
-   "_Stop3": 0.6171,
+   "_Stop1": 0.4746,
+   "_Stop2": 0.6201,
+   "_Stop3": 0.6216,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0384": {
@@ -3021,12 +2989,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.2904,
-   "_Stop2": 0.5748,
-   "_Stop3": 0.7657,
+   "_Stop1": 0.2967,
+   "_Stop2": 0.5745,
+   "_Stop3": 0.7667,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0460": {
@@ -3142,12 +3110,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.2056,
-   "_Stop2": 0.5515,
-   "_Stop3": 0.661,
+   "_Stop1": 0.199,
+   "_Stop2": 0.5494,
+   "_Stop3": 0.6646,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0485": {
@@ -3157,12 +3125,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.1476,
-   "_Stop2": 0.5355,
-   "_Stop3": 0.6372,
+   "_Stop1": 0.1321,
+   "_Stop2": 0.5323,
+   "_Stop3": 0.6413,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0491": {
@@ -3172,12 +3140,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.1753,
-   "_Stop2": 0.5432,
-   "_Stop3": 0.7077,
+   "_Stop1": 0.1641,
+   "_Stop2": 0.5405,
+   "_Stop3": 0.7101,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0500": {
@@ -3187,12 +3155,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.1439,
-   "_Stop2": 0.5345,
-   "_Stop3": 0.6694,
+   "_Stop1": 0.1278,
+   "_Stop2": 0.5312,
+   "_Stop3": 0.6727,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0530": {
@@ -3202,12 +3170,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.197,
-   "_Stop2": 0.5491,
-   "_Stop3": 0.7161,
+   "_Stop1": 0.189,
+   "_Stop2": 0.5469,
+   "_Stop3": 0.7184,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0531": {
@@ -3270,12 +3238,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.1902,
-   "_Stop2": 0.5473,
-   "_Stop3": 0.716,
+   "_Stop1": 0.1812,
+   "_Stop2": 0.5449,
+   "_Stop3": 0.7182,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0560": {
@@ -3285,12 +3253,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.2455,
-   "_Stop2": 0.5625,
-   "_Stop3": 0.6534,
+   "_Stop1": 0.245,
+   "_Stop2": 0.5612,
+   "_Stop3": 0.6571,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0604": {
@@ -3300,12 +3268,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.1287,
-   "_Stop2": 0.5304,
-   "_Stop3": 0.585,
+   "_Stop1": 0.1104,
+   "_Stop2": 0.5267,
+   "_Stop3": 0.5903,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0609": {
@@ -3315,12 +3283,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.0617,
-   "_Stop2": 0.5119,
-   "_Stop3": 0.5828,
+   "_Stop1": 0.0332,
+   "_Stop2": 0.5069,
+   "_Stop3": 0.5883,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0623": {
@@ -3331,11 +3299,11 @@
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
    "_Stop1": 0.2491,
-   "_Stop2": 0.5635,
-   "_Stop3": 0.712,
+   "_Stop2": 0.5623,
+   "_Stop3": 0.7143,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0652": {
@@ -3504,12 +3472,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.1716,
-   "_Stop2": 0.5421,
-   "_Stop3": 0.6875,
+   "_Stop1": 0.1598,
+   "_Stop2": 0.5394,
+   "_Stop3": 0.6904,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0670": {
@@ -3519,12 +3487,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.1418,
-   "_Stop2": 0.534,
-   "_Stop3": 0.6787,
+   "_Stop1": 0.1255,
+   "_Stop2": 0.5306,
+   "_Stop3": 0.6818,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0678": {
@@ -3534,63 +3502,64 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.207,
-   "_Stop2": 0.5519,
-   "_Stop3": 0.7041,
+   "_Stop1": 0.2006,
+   "_Stop2": 0.5498,
+   "_Stop3": 0.7066,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0687": {
-   "_Stop1": 0.3754,
-   "_Stop2": 0.6352,
-   "_Stop3": 0.6354,
-   "_Stop4": 0.8833,
+   "_Stop1": 0.2906,
+   "_Stop2": 0.5984,
+   "_Stop3": 0.6906,
+   "_Stop4": 0.9063,
    "_GlassColor": 1,
-   "_GlassTint": 0.0664,
-   "_GlowIntensity": 0.6482,
+   "_GlassTint": 0.0844,
+   "_GlowIntensity": 0.8172,
    "_GlowColorIntensity": 1,
-   "_BrightnessCurve": 0.2272,
+   "_BrightnessCurve": 0.1531,
    "_fit": {
     "status": "fitted",
     "tier": "silver",
-    "quality": "fair",
-    "rmse": 13.21,
-    "rmseGeneric": 43.028,
-    "glassMargin": 0.463,
+    "reference": "screenshot",
+    "quality": "good",
+    "rmse": 5.523,
+    "rmseGeneric": 20.058,
+    "glassMargin": 1.79,
     "ci": {
      "_Stop1": [
-      0.317,
-      0.417
+      0.233,
+      0.333
      ],
      "_Stop2": [
-      0.633,
-      0.635
+      0.598,
+      0.6
      ],
      "_Stop3": [
-      0.633,
-      0.635
+      0.683,
+      0.7
      ],
      "_Stop4": [
-      0.833,
+      0.883,
       0.95
      ],
      "_GlassTint": [
-      0.017,
+      0.05,
       0.117
      ],
      "_GlowIntensity": [
-      0.417,
-      0.9
+      0.683,
+      0.95
      ],
      "_GlowColorIntensity": [
-      0.267,
+      0.783,
       1
      ],
      "_BrightnessCurve": [
-      0.217,
-      0.233
+      0.15,
+      0.153
      ]
     }
    }
@@ -3602,12 +3571,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.2027,
-   "_Stop2": 0.5507,
-   "_Stop3": 0.7155,
+   "_Stop1": 0.1956,
+   "_Stop2": 0.5486,
+   "_Stop3": 0.7177,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0691": {
@@ -3617,12 +3586,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.1608,
-   "_Stop2": 0.5392,
-   "_Stop3": 0.6671,
+   "_Stop1": 0.1473,
+   "_Stop2": 0.5362,
+   "_Stop3": 0.6705,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0701": {
@@ -3632,12 +3601,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.1117,
-   "_Stop2": 0.5257,
-   "_Stop3": 0.5823,
+   "_Stop1": 0.0908,
+   "_Stop2": 0.5217,
+   "_Stop3": 0.5877,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0718": {
@@ -3647,12 +3616,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.091,
-   "_Stop2": 0.52,
-   "_Stop3": 0.6513,
+   "_Stop1": 0.0669,
+   "_Stop2": 0.5156,
+   "_Stop3": 0.6551,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0719": {
@@ -3715,12 +3684,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.1968,
-   "_Stop2": 0.5491,
-   "_Stop3": 0.6706,
+   "_Stop1": 0.1888,
+   "_Stop2": 0.5468,
+   "_Stop3": 0.6739,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0768": {
@@ -3730,12 +3699,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.1386,
-   "_Stop2": 0.5331,
-   "_Stop3": 0.6972,
+   "_Stop1": 0.1218,
+   "_Stop2": 0.5296,
+   "_Stop3": 0.6999,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0780": {
@@ -3745,12 +3714,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.1154,
-   "_Stop2": 0.5267,
-   "_Stop3": 0.6512,
+   "_Stop1": 0.095,
+   "_Stop2": 0.5228,
+   "_Stop3": 0.655,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0801": {
@@ -3760,12 +3729,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.2028,
-   "_Stop2": 0.5507,
-   "_Stop3": 0.7087,
+   "_Stop1": 0.1957,
+   "_Stop2": 0.5486,
+   "_Stop3": 0.711,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0807": {
@@ -3775,12 +3744,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.1309,
-   "_Stop2": 0.5309,
-   "_Stop3": 0.6867,
+   "_Stop1": 0.1129,
+   "_Stop2": 0.5274,
+   "_Stop3": 0.6897,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0870": {
@@ -3843,12 +3812,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.1315,
-   "_Stop2": 0.5311,
-   "_Stop3": 0.6456,
+   "_Stop1": 0.1136,
+   "_Stop2": 0.5275,
+   "_Stop3": 0.6495,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0970": {
@@ -3858,12 +3827,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.1837,
-   "_Stop2": 0.5455,
-   "_Stop3": 0.6756,
+   "_Stop1": 0.1738,
+   "_Stop2": 0.543,
+   "_Stop3": 0.6788,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0978": {
@@ -3873,12 +3842,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.2092,
-   "_Stop2": 0.5525,
-   "_Stop3": 0.6302,
+   "_Stop1": 0.2032,
+   "_Stop2": 0.5505,
+   "_Stop3": 0.6345,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "0998": {
@@ -3888,12 +3857,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.344,
-   "_Stop2": 0.5896,
-   "_Stop3": 0.8498,
+   "_Stop1": 0.3584,
+   "_Stop2": 0.5903,
+   "_Stop3": 0.8488,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   },
   "359_Mega_Z": {
@@ -3903,12 +3872,12 @@
    "_Stop4": 0.84,
    "_GlowColorIntensity": 0.5,
    "_GlassColor": 0,
-   "_Stop1": 0.121,
-   "_Stop2": 0.5282,
-   "_Stop3": 0.6554,
+   "_Stop1": 0.1016,
+   "_Stop2": 0.5245,
+   "_Stop3": 0.6591,
    "_fit": {
     "status": "inferred",
-    "expectedRmse": 20.728
+    "expectedRmse": 19.777
    }
   }
  }
