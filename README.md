@@ -24,31 +24,33 @@ that the shader reads (`_Stop1`–`_Stop4`, `_GlassColor`, `_GlassTint`, `_GlowI
 `_GlowColorIntensity`, `_BrightnessCurve`). Those live in a downloadable bundle nobody has dumped, and the
 public data only has the colors. So the numbers were **fitted** to the in-game reference images:
 [`raw/MegaCandyMaterialFloats.json`](raw/MegaCandyMaterialFloats.json) holds an estimate for all 96
-entries, and the lab starts every entry from it. They are estimates, not the game's real values.
+entries (62 fitted, 34 guessed), and the lab starts every entry from it. They are estimates, not the game's real values.
 
 | | species | error with the generic material | error with the fitted estimate |
 |---|---|---|---|
 | gold references | 7 | 35.4 | 12.5 |
-| silver references | 44 | 23.5 | 9.6 |
-| bronze references | 9 | 30.7 | 11.0 |
+| silver references | 47 | 23.4 | 9.5 |
+| bronze references | 8 | 29.4 | 9.2 |
 
-Error is RMSE in 0–255 color levels over the pixels both images cover; about 7 is the noise floor. 27
-species fit within 10, 26 within 15, and 7 are still above 15: Garchomp, Aerodactyl, Pidgeot, Gallade,
-Alakazam, Ampharos and Falinks.
+Error is RMSE in 0–255 color levels over the pixels both images cover; about 7 is the noise floor. 30
+species fit within 10, 26 within 15, and 6 are still above 15: Aerodactyl, Pidgeot, Gallade, Ampharos,
+Alakazam and Falinks. Neighbouring stops are kept at least 0.1 apart in every fit (that costs almost
+nothing: 0.06 RMSE on average).
 
 **Some numbers look like real constants.** Across the fitted species, `_BrightnessCurve` sits at about
 0.15 and `_GlassTint` at about 0.1 almost everywhere (pinning them costs little); `_GlowIntensity`
-(about 0.77) and `_Stop4` (about 0.84) probably are too. `_Stop1`–`_Stop3` clearly vary per species.
-`_GlowColorIntensity` can't be pinned down from images, and `_GlassColor` is a per-species switch. The
+(about 0.77) probably is too. `_Stop1`–`_Stop3` clearly vary per species, and `_Stop4` is barely
+identified (it mostly sits just above `_Stop3`). `_GlowColorIntensity` can't be pinned down from images,
+and `_GlassColor` is a per-species switch. The
 JSON lists a verdict for each.
 
-**The 36 entries with no reference image** get a guess: the constants above plus stop positions predicted
+**The 34 entries with no reference image** get a guess: the constants above plus stop positions predicted
 from the entry's own ramp colors. Tested by leaving each referenced species out in turn, that guess
-averages an error of about 20, against 26 for the generic material. Treat it as a starting point.
+averages an error of about 20, against 25 for the generic material. Treat it as a starting point.
 
-**The references matter most.** Three of them (Blastoise, Steelix, Malamar) were replaced with cleaned-up
-in-game screenshots — the earlier images came from official blogs and did not match the in-game render —
-and all three then fit at 4–5.5, right at the noise floor. The remaining poor fits are the first
+**The references matter most.** Five of them (Blastoise, Steelix, Malamar, Staraptor, Garchomp) were replaced with
+cleaned-up in-game screenshots — the earlier images did not match the in-game render — and all five then
+fit at 4.5–6, right at the noise floor. The remaining poor fits are the first
 candidates for the same treatment. The seven gold references also disagree with the rest of the set
 (their fitted `_BrightnessCurve` is around 0.04 instead of 0.16), which is what an older or different
 image source would look like.
@@ -60,11 +62,12 @@ image source would look like.
 - **Material floats:** one slider per number, kept per entry and remembered in your browser. *Fitted
   estimate* re-reads the JSON and gives the entry its estimate; *Generic material*, *Even stops* and
   *Shader defaults* are the other starting points; *Apply to all*, *Reset*, *Undo* and *Copy* do what
-  they say. Double-click a slider to restore that one value.
+  they say. Click a number to type a value instead (it must be a number within the slider's range, and stops
+  must stay in order); double-click a slider to put that one value back to the entry's estimate.
 - **Compare:** in-game, render, difference, wipe and flicker views, plus the error for this entry, the
   gold references and all references. Hover to probe a pixel, click to pin it, Shift-drag for a transect.
 - **Shader components / Explore:** each stage of the shader drawn on its own, and colour-space, transect
-  and feature-map tools. The *Fitting* tab runs the same descent that produced the JSON.
+  and feature-map tools. The *Fitting* tab runs the same descent that produced the JSON, keeping stops at least 0.1 apart.
 - **Save PNG / Render all:** save the current render as a PNG, or all 96 in a single `.zip`.
 
 ## What's in the repo

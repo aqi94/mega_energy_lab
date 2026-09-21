@@ -65,7 +65,7 @@ judgement (see `research_notes/findings-timeline.md` for the evidence behind eac
 **What `mega_lab.html` ships (since 2026-09-20):** one model — the real shader — with every entry
 starting at its **estimated** floats from `raw/MegaCandyMaterialFloats.json` (fetched over http, embedded snapshot on
 `file://`; regenerate the snapshot with `scripts/embed_floats.py`; layering: generic material < estimate < the user's
-slider edits; the header's "Δ vs generic" shows the gain; edits live in localStorage `megaLab.floats2` as differences from the estimate — the pre-estimate key `megaLab.floats` is set aside as `floatsLegacy`, since read as edits on top of the estimate it hid the fitted values). Before that every entry started at the generic material's floats (`MegaCandyDefault`: stops 0 / 0.594 / 0.78 / 0.806, glass tint
+slider edits; the header's "Δ vs generic" shows the gain; fits keep neighbouring stops >= 0.1 apart — `MIN_STOP_GAP` in the lab's descent; edits live in localStorage `megaLab.floats2` as differences from the estimate — the pre-estimate key `megaLab.floats` is set aside as `floatsLegacy`, since read as edits on top of the estimate it hid the fitted values). Before that every entry started at the generic material's floats (`MegaCandyDefault`: stops 0 / 0.594 / 0.78 / 0.806, glass tint
 0.1, glow 0.56 / 0.5, curve 0.15). Those starting values are *known for the generic icon only*; for a
 species they are a guess until its material is dumped. The earlier fitted model (Venusaur fit, RMSE 11.7)
 and its colour editors, stage toggles and shader menu were removed: they modelled things the real shader
@@ -93,6 +93,9 @@ There is no build step. Open `mega_lab.html` directly in a browser — double-cl
 
 Nothing else typed into the page persists back to this repo — it's a scratchpad for eyeballing (and
 now rendering) the model, not an editor that writes source files.
+
+Estimating the unknown floats (refit, replace a reference, constants / cohorts, inference for unreferenced entries): use the
+`mega-energy-floats` skill (`.claude/skills/`, local) — it drives the lab headless through `window.MegaLab`.
 
 ## Architecture
 - `mega_lab.html` — the whole tool, one self-contained file (inline JSON + `data:` URIs, no external

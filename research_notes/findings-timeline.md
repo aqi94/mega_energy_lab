@@ -161,3 +161,22 @@ straight through unless you're doing a deep dive on one issue.
     Gallade, Alakazam, Ampharos, Falinks). `_BrightnessCurve` median 0.155 (MAD 0.012, 53 fits) - pinning it at 0.15 costs a
     median 0.10 RMSE; the 7 gold refs still fit ~0.04. The colour-regression guess for unreferenced entries averages 19.8
     (leave-one-out) vs 25.9 for the generic material. Any remaining poor reference is a candidate for the same treatment.
+26. **Minimum stop spacing, and Staraptor + Garchomp redone** (2026-09-20, user: Malamar's stops were too close to each
+    other; avoid that; also redo Staraptor and Garchomp from in-game screenshots). Fits had drifted to stops only 0.02-0.09
+    apart (33 of 60 fits had a gap < 0.1; `_Stop4` mostly sat on top of `_Stop3` because it is barely identified). Rule now:
+    neighbouring stops >= 0.1 apart (`MIN_STOP_GAP` in the lab's descent; fits also use joint shifts of adjacent stops,
+    since coordinate descent stalls on the boundary). Cost measured over all 60 species: gap 0.05 = +0.00 mean RMSE, **0.10 =
+    +0.06 (worst Heracross +0.56)**, 0.15 = +0.69 (14 species lose > 1). Malamar at 0.10: 5.52 -> 5.59, stops 0.30 / 0.594 / 0.694 /
+    0.90. Consequences: `_Stop4` is no longer a near-constant (median 0.87, rides at `_Stop3` + gap) - verdict "weakly
+    identified"; pinning it now costs more. Staraptor and Garchomp (bronze, blog images) replaced by cleaned screenshots
+    -> silver: Staraptor 15.4 -> 4.5, Garchomp 24.2 -> 5.9 (were 11.3 / 21.9). Now 7 gold / 46 silver / 7 bronze; mean RMSE generic
+    -> fitted 35.4 -> 12.5 / 23.3 -> 9.5 / 30.9 -> 9.5; 29 fits <= 10, 25 <= 15, 6 above 15 (Aerodactyl, Pidgeot, Gallade,
+    Ampharos, Alakazam, Falinks). `_BrightnessCurve` median 0.156 (MAD 0.013); pinning it costs a median 0.13. Guess for the
+    36 unreferenced entries: LOO mean 19.8 vs 25.9 generic.
+27. **Legacy Charizard and Mewtwo added as references** (2026-09-20, user: they are still legit). The base entries `0006` Charizard
+    (silver) and `0150` Mewtwo (bronze) - the original single icons, distinct from the X / Y entries - had no reference. With the
+    new images: Mewtwo 18.5 -> 7.7 (float set inside the main cluster: stops 0.33 / 0.55 / 0.77 / 0.90, tint 0.11, glow 0.79, curve
+    0.16); Charizard 27.2 -> 12.6 but as an outlier (`_Stop1` = 0, curve 0.02), like Charizard X / Y (12.3 / 12.8) - all three Charizard
+    references may share a source that is off. Now 62 fitted (7 gold / 47 silver / 8 bronze) and 34 inferred; mean RMSE generic ->
+    fitted 35.4 -> 12.5 / 23.4 -> 9.5 / 29.4 -> 9.2; 30 fits <= 10, 26 <= 15, 6 above 15 (unchanged list). Constants unchanged
+    (`_BrightnessCurve` median 0.156, MAD 0.013; pin costs a median 0.13). Guess for unreferenced entries: LOO mean 19.9 vs 25.5 generic.
