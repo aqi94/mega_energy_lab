@@ -72,6 +72,17 @@ for replacement.
 - **Shader components / Explore:** each stage of the shader drawn on its own, and colour-space, transect
   and feature-map tools. The *Fitting* tab runs the same descent that produced the JSON, keeping stops at least 0.1 apart.
 - **Save PNG / Render all:** save the current render as a PNG, or all 96 in a single `.zip`.
+- **Candy tab:** the ordinary striped Candy and Candy XL, rendered with the game's own candy shader (also read out of the
+  game's files — a plain three-channel mask, nothing estimated; see
+  [`research_notes/candy-shader.md`](research_notes/candy-shader.md)). Pick a family, or type your own base and stripe
+  colours; Save PNG / Render all work here too (`GO_<Species>_Candy[_XL].png`, `candy_renders.zip`).
+- **Medals — [`medal_lab.html`](medal_lab.html):** a second page for the medals (bronze / silver / gold / platinum),
+  which are RGB templates too. The tier colours and each medal's accent colour come from the game's files; the tint
+  itself is estimated against in-game screenshots, because that shader is downloaded at runtime and is not in the
+  app package (see [`research_notes/medal-shader.md`](research_notes/medal-shader.md)). Pick a medal and a tier,
+  see the composed medal and every tier, compare the four that have a screenshot, Save PNG / Render all. If a
+  medal sits off-centre (some templates are cropped to the art), drag it inside the ring with the guides, scale it
+  with the wheel (aspect ratio fixed), and turn the white disc off; the placement is remembered per medal.
 
 ## What's in the repo
 
@@ -79,7 +90,9 @@ for replacement.
 - [`raw/`](raw) — the source data: `pokemon_details_mega_candy.png` (the gray template),
   `PokemonMegaCandyAkaMegaEnergy.json` (each species' material colors, dumped by PokeMiners),
   `MegaCandyMaterialFloats.json` (the estimates), and `standards/{gold,silver,bronze}/` (the in-game
-  reference images, by how much they are trusted).
+  reference images, by how much they are trusted); `candy/` holds the two candy templates and
+  `PokemonCandyColorData.json` for the Candy tab; `medals/` holds the medal templates, the tier rings, the game's
+  palette, the fitted tint and the screenshots for `medal_lab.html`.
 - [`research_notes/`](research_notes) — what was tried, what failed, and what is still open.
 
 ## How the references are made

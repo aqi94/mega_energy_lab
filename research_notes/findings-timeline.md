@@ -213,3 +213,53 @@ straight through unless you're doing a deep dive on one issue.
     median 0.09. Guess for unreferenced entries: LOO mean 18.7 (was 19.9) vs 24.7 for the generic material. Lesson: the
     "gold" tier was the least trustworthy one, and the constants were already visible through it; cleaner references only
     sharpen them.
+29. **The Candy / Candy XL shader, read out of the APK (2026-09-26, user: "let's do the same exercise for the striped Candy and Candy XL").**
+    `GeneralCandyMat` (sharedassets1.assets, pathID 210; `_ColorR` red, `_ColorG` green, `_ColorB` white) points at
+    `NianticCustom/UI/TriColorSplat`, whose whole fragment program is `rgb = R·_ColorR + G·_ColorG + B·_ColorB`, `a = A` —
+    no clamp, no vertex colour, sRGB. So the main app's `candyColor.js` mask was the game's exact maths all along, and there
+    is nothing to fit. The APK's `candy_rgb` (256×256, ASTC) equals PokeMiners' PNG inside the icon (< 1 level; only the
+    alpha edge differs); the XL template and `PokemonCandyColorData` live in remote bundles. Still assumed (native code):
+    `_ColorG ← PrimaryColor`, `_ColorR ← SecondaryColor` — consistent with in-game candy from memory; user chose to keep
+    it rather than validate with screenshots. `mega_lab.html` gained a **Candy** page (family dropdown from the JSON,
+    custom base / stripe colours, both icons at native size, Save PNG / Render all → `candy_renders.zip`,
+    `window.MegaLab.candy`); `scripts/embed_candy.py` embeds `raw/candy/`. Headless check: five sample pixels equal a
+    Python evaluation of the formula exactly. Write-up: `candy-shader.md`.
+30. **XL candy frame + the mapping confirmed (2026-09-26, user: "the XL Candy template isn't centered properly").**
+    `LV40_XLCandy_RGB_PSD.png` (220×232) is the cut-out art; the in-game icon is 256×256 with that art at (14, 19)
+    (user-supplied `raw/candy/standards/GO_Nymble_Candy_XL.png`: alpha RMSE 1.9 at that offset). The lab now renders XL
+    into the 256 frame (`frame` per template in `embed_candy.py`). The same reference settles the channel mapping:
+    Nymble's Primary → `_ColorG`, Secondary → `_ColorR` gives RMSE 7.6, swapped 99.3.
+31. **Medals: palette read from the APK, tint fitted (2026-09-26, user: "let's see how Medals are shaded … create
+    another tool called medal_lab.html").** Since Platinum medals every medal is an RGB template (`Badge_<n>.png`: G =
+    tier metal with the shading in G's intensity, B = a fixed per-medal accent, R unused) plus one pure-G ring per tier
+    (`badge_ring_1…4`). The APK carries the inputs — `Niantic.Holoholo.BadgeMaterialConfig` (sharedassets1 pathID
+    162909): MetalColor / MetalPower per tier (bronze #F5CFA7 3.74 · silver #B1D8E9 4.18 · gold #FFDF19 4.42 · platinum
+    #A7C1CF 4.00, MetalSaturation 1.0) and a DetailColor per medal — but **not the shader** (`ma_Badge`, remote; the
+    code sets `_MetalColorPower`, `_MetalSaturation`, `_DetailColor`, `_DetailStrength`, `_DetailTex`, `_InsetTex`).
+    The old pre-painted tiers were baked from the same templates (per-G-bin std 2–10) but with an older palette (RMSE
+    25 / 18 / 30 vs today's colours), so four in-game screenshots (3 platinum, 1 silver, + their tier thumbnails) are the
+    standards. Fitted: `mix(MetalColor^(MetalPower·k(G)), white, w(G))`, k, w linear in G, one light ramp over the
+    sprite, the accent the same on DetailColor — big icons RMSE 11.2 / 14.6 / 11.9 / 11.3 (JPEG floor 8–10). Write-up:
+    `medal-shader.md`; the tool: `medal_lab.html` (`scripts/embed_medals.py`, `scripts/fit_medals.py`).
+32. **Medal composition measured (2026-09-27, user: "the ring to symbol ratio isn't the default what we assume … don't
+    forget about Inserts").** Nine screenshots, ring inner edge fitted as a circle, template aligned: every tier's ring
+    is the same size on screen (outer r 332.3 px); the icon is the game's texture drawn at one constant pixel scale —
+    full rect centred, side = (1 − 2·anchor) × ring outer diameter, anchor 0.25 (measured 0.491–0.495 of the ring),
+    0.18 for Showcase Star's override (0.659) — so PokeMiners' cropped templates (Ultra League 462×452) come out small
+    and off-centre by construction; Expert Navigator is ×1.15 (unexplained); the insets sit on top at the same pixel
+    scale, centred (Mega Guru: 0.985, 2–3 px). The lab's defaults follow the rule plus the measured deviations
+    (`raw/medals/MedalLayouts.json`, `scripts/measure_layout.py`); the disc is each ring's own inner radius.
+33. **The former generic icon's colours, fitted (2026-10-11, user: "formerly the 'default' colors … as a lossy screenshot …
+    determine the gradient and glow colors").** Reference: Bulbagarden's `GO_Mega_Energy.png` (the 2021-06-08 ImageMagick
+    thumbnail of #28), now kept apart as `raw/standards/legacy/GO_Mega_Energy_2021.png`; the committed no-metadata image is
+    back as the silver generic (it scores 7.22 against today's `MegaCandyDefault`, the legacy one 26.67). Fitted inside the
+    lab (`MegaLab.shadeWith` / `rmseVs` / `pngWith`, added for icons with no entry; `_Color` kept white). **Colours only**
+    (today's floats fixed): RMSE 16.1, too-grey emblem: the old build's floats differed too. **Colours + floats**, glass mode 0:
+    **RMSE 6.7** (mode 1: 7.5) with Ramp1 #190007 · Ramp2 #2F3450 · Ramp3 #4E5C7A · Ramp4 #5D606E (not white) and stops
+    0.335 / 0.594 / 0.77 / 0.792, `_GlassTint` 0.07, `_GlowIntensity` 0.99, `_BrightnessCurve` 0.23. Ramp2 / Ramp3 are well
+    identified (±0.02–0.04 per channel at +0.5 RMSE), Ramp1 only as "near black", Ramp4 ±0.08. **The glow colour is not
+    identified by the body** (182 opaque outline pixels, weight <= 0.2): on the rim pixels (G > 20, ref alpha >= 128) it
+    trades against `_GlowColorIntensity` — 0.5 (today's) → #C6CFB5 (0.776, 0.811, 0.711), 0.37 → #FAFFDA, 1 → #7C8382, all
+    within 0.04 overall. Read the glow as "pale, near-neutral". Estimates from a lossy thumbnail, not dumped values; the old
+    material had a dark, low-key ramp lifted by a stronger mid-tone curve, where today's is pink / navy / periwinkle / white.
+    Renders: `renders/GO_Mega_Energy_legacy_{joint,colours,compare}.png`.

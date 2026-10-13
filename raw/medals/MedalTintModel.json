@@ -1,0 +1,1123 @@
+{
+ "_what": "Fitted stand-in for the medal shader's tint (the shader itself is in a remote bundle, not the APK). metal = mix(MetalColor ** (MetalPower * k(G)), white, w(G)), k = max(0, a0 + a1*G), w = sat(c0 + c1*G); accent = the same form on DetailColor over template B with its own constants and power 1; then light: c += l0 + lu*u + lv*v over the sprite (u right, v down, 0..1), clamped. Fitted to in-game screenshots (four big medals + their bronze/silver/gold/platinum thumbnails); the pre-platinum baked art uses an older palette and is only a check.",
+ "_fitted": "2026-09-26, scripts/fit_medals.py",
+ "source": "fitted",
+ "metal": {
+  "a0": 2.13553,
+  "a1": -1.95143,
+  "c0": 0.04982,
+  "c1": 0.41853
+ },
+ "accent": {
+  "a0": 5.63421,
+  "a1": -4.82996,
+  "c0": 0.16726,
+  "c1": 0.59472
+ },
+ "light": {
+  "l0": 0.01446,
+  "lu": -0.03952,
+  "lv": -0.0582
+ },
+ "rmse": {
+  "_what": "fit = in-game screenshots (big icon + tier thumbnails), baked = the pre-platinum art (older palette, check only)",
+  "tiers": {
+   "bronze": {
+    "fit": 12.87,
+    "fit_ramp": 12.02,
+    "fit_n": 6633,
+    "baked": 24.91,
+    "baked_ramp": 28.42,
+    "baked_n": 2994434
+   },
+   "silver": {
+    "fit": 9.05,
+    "fit_ramp": 8.52,
+    "fit_n": 47168,
+    "baked": 17.69,
+    "baked_ramp": 16.91,
+    "baked_n": 2997309
+   },
+   "gold": {
+    "fit": 16.37,
+    "fit_ramp": 16.0,
+    "fit_n": 4935,
+    "baked": 29.67,
+    "baked_ramp": 31.32,
+    "baked_n": 2968046
+   },
+   "platinum": {
+    "fit": 12.27,
+    "fit_ramp": 11.43,
+    "fit_n": 84150
+   }
+  },
+  "accent": 19.65,
+  "accentBakedCheck": 57.99,
+  "standards": [
+   {
+    "standard": "platinum_badge_38.PNG",
+    "medal": 38,
+    "tier": "platinum",
+    "rmse": 11.16,
+    "n": 39654,
+    "fitted": true
+   },
+   {
+    "standard": "platinum_badge_38.PNG thumb",
+    "medal": 38,
+    "tier": "bronze",
+    "rmse": 14.6,
+    "n": 2364,
+    "fitted": true
+   },
+   {
+    "standard": "platinum_badge_38.PNG thumb",
+    "medal": 38,
+    "tier": "silver",
+    "rmse": 13.45,
+    "n": 2294,
+    "fitted": true
+   },
+   {
+    "standard": "platinum_badge_38.PNG thumb",
+    "medal": 38,
+    "tier": "gold",
+    "rmse": 18.31,
+    "n": 2461,
+    "fitted": true
+   },
+   {
+    "standard": "platinum_badge_38.PNG thumb",
+    "medal": 38,
+    "tier": "platinum",
+    "rmse": 16.58,
+    "n": 2215,
+    "fitted": true
+   },
+   {
+    "standard": "platinum_badge_80.PNG",
+    "medal": 80,
+    "tier": "platinum",
+    "rmse": 14.59,
+    "n": 23779,
+    "fitted": true
+   },
+   {
+    "standard": "platinum_badge_80.PNG thumb",
+    "medal": 80,
+    "tier": "bronze",
+    "rmse": 16.26,
+    "n": 1428,
+    "fitted": true
+   },
+   {
+    "standard": "platinum_badge_80.PNG thumb",
+    "medal": 80,
+    "tier": "silver",
+    "rmse": 16.39,
+    "n": 1428,
+    "fitted": true
+   },
+   {
+    "standard": "platinum_badge_80.PNG thumb",
+    "medal": 80,
+    "tier": "gold",
+    "rmse": 17.81,
+    "n": 1509,
+    "fitted": true
+   },
+   {
+    "standard": "platinum_badge_80.PNG thumb",
+    "medal": 80,
+    "tier": "platinum",
+    "rmse": 17.92,
+    "n": 1275,
+    "fitted": true
+   },
+   {
+    "standard": "platinum_badge_83.PNG",
+    "medal": 83,
+    "tier": "platinum",
+    "rmse": 12.24,
+    "n": 20397,
+    "fitted": true
+   },
+   {
+    "standard": "platinum_badge_83.PNG thumb",
+    "medal": 83,
+    "tier": "bronze",
+    "rmse": 12.34,
+    "n": 1104,
+    "fitted": true
+   },
+   {
+    "standard": "platinum_badge_83.PNG thumb",
+    "medal": 83,
+    "tier": "silver",
+    "rmse": 13.28,
+    "n": 1089,
+    "fitted": true
+   },
+   {
+    "standard": "platinum_badge_83.PNG thumb",
+    "medal": 83,
+    "tier": "gold",
+    "rmse": 13.12,
+    "n": 1215,
+    "fitted": true
+   },
+   {
+    "standard": "platinum_badge_83.PNG thumb",
+    "medal": 83,
+    "tier": "platinum",
+    "rmse": 15.55,
+    "n": 1066,
+    "fitted": true
+   },
+   {
+    "standard": "silver_badge_1004.PNG",
+    "medal": 1004,
+    "tier": "silver",
+    "rmse": 11.31,
+    "n": 53735,
+    "fitted": true
+   },
+   {
+    "standard": "silver_badge_1004.PNG thumb",
+    "medal": 1004,
+    "tier": "bronze",
+    "rmse": 18.95,
+    "n": 2510,
+    "fitted": true
+   },
+   {
+    "standard": "silver_badge_1004.PNG thumb",
+    "medal": 1004,
+    "tier": "silver",
+    "rmse": 18.57,
+    "n": 2503,
+    "fitted": true
+   },
+   {
+    "standard": "baked",
+    "medal": 1,
+    "tier": "bronze",
+    "rmse": 27.8,
+    "n": 119928,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 1,
+    "tier": "silver",
+    "rmse": 19.78,
+    "n": 121440,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 1,
+    "tier": "gold",
+    "rmse": 46.26,
+    "n": 108092,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 2,
+    "tier": "bronze",
+    "rmse": 24.17,
+    "n": 61545,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 2,
+    "tier": "silver",
+    "rmse": 26.74,
+    "n": 61962,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 2,
+    "tier": "gold",
+    "rmse": 27.04,
+    "n": 61283,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 3,
+    "tier": "bronze",
+    "rmse": 41.95,
+    "n": 136060,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 3,
+    "tier": "silver",
+    "rmse": 34.23,
+    "n": 135661,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 3,
+    "tier": "gold",
+    "rmse": 47.82,
+    "n": 124518,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 5,
+    "tier": "bronze",
+    "rmse": 24.69,
+    "n": 71891,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 5,
+    "tier": "silver",
+    "rmse": 23.76,
+    "n": 72595,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 5,
+    "tier": "gold",
+    "rmse": 29.27,
+    "n": 73778,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 6,
+    "tier": "bronze",
+    "rmse": 46.37,
+    "n": 151764,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 6,
+    "tier": "silver",
+    "rmse": 45.26,
+    "n": 151624,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 6,
+    "tier": "gold",
+    "rmse": 46.85,
+    "n": 151559,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 8,
+    "tier": "bronze",
+    "rmse": 26.52,
+    "n": 72510,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 8,
+    "tier": "silver",
+    "rmse": 24.57,
+    "n": 71798,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 8,
+    "tier": "gold",
+    "rmse": 27.86,
+    "n": 72902,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 11,
+    "tier": "bronze",
+    "rmse": 18.44,
+    "n": 132302,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 11,
+    "tier": "silver",
+    "rmse": 15.37,
+    "n": 132290,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 11,
+    "tier": "gold",
+    "rmse": 26.55,
+    "n": 132182,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 13,
+    "tier": "bronze",
+    "rmse": 42.87,
+    "n": 41540,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 13,
+    "tier": "silver",
+    "rmse": 44.15,
+    "n": 41967,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 13,
+    "tier": "gold",
+    "rmse": 45.31,
+    "n": 41250,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 14,
+    "tier": "bronze",
+    "rmse": 27.11,
+    "n": 160237,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 14,
+    "tier": "silver",
+    "rmse": 23.0,
+    "n": 160817,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 14,
+    "tier": "gold",
+    "rmse": 31.79,
+    "n": 160253,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 36,
+    "tier": "bronze",
+    "rmse": 12.87,
+    "n": 118183,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 36,
+    "tier": "silver",
+    "rmse": 14.22,
+    "n": 118152,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 36,
+    "tier": "gold",
+    "rmse": 18.0,
+    "n": 118601,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 37,
+    "tier": "bronze",
+    "rmse": 10.57,
+    "n": 108991,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 37,
+    "tier": "silver",
+    "rmse": 11.37,
+    "n": 109197,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 37,
+    "tier": "gold",
+    "rmse": 17.35,
+    "n": 109051,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 38,
+    "tier": "bronze",
+    "rmse": 14.43,
+    "n": 100563,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 38,
+    "tier": "silver",
+    "rmse": 8.48,
+    "n": 100456,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 38,
+    "tier": "gold",
+    "rmse": 25.08,
+    "n": 100593,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 39,
+    "tier": "bronze",
+    "rmse": 33.82,
+    "n": 101615,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 39,
+    "tier": "silver",
+    "rmse": 17.18,
+    "n": 101609,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 39,
+    "tier": "gold",
+    "rmse": 26.68,
+    "n": 101462,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 40,
+    "tier": "bronze",
+    "rmse": 18.89,
+    "n": 100302,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 40,
+    "tier": "silver",
+    "rmse": 12.05,
+    "n": 100959,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 40,
+    "tier": "gold",
+    "rmse": 20.49,
+    "n": 100473,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 41,
+    "tier": "bronze",
+    "rmse": 21.76,
+    "n": 108877,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 41,
+    "tier": "silver",
+    "rmse": 18.1,
+    "n": 108829,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 41,
+    "tier": "gold",
+    "rmse": 22.47,
+    "n": 109125,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 42,
+    "tier": "bronze",
+    "rmse": 27.8,
+    "n": 90237,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 42,
+    "tier": "silver",
+    "rmse": 16.72,
+    "n": 90469,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 42,
+    "tier": "gold",
+    "rmse": 23.73,
+    "n": 90354,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 43,
+    "tier": "bronze",
+    "rmse": 27.64,
+    "n": 146884,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 43,
+    "tier": "silver",
+    "rmse": 23.19,
+    "n": 146851,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 43,
+    "tier": "gold",
+    "rmse": 33.36,
+    "n": 147013,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 45,
+    "tier": "bronze",
+    "rmse": 35.76,
+    "n": 74778,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 45,
+    "tier": "silver",
+    "rmse": 17.53,
+    "n": 74775,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 45,
+    "tier": "gold",
+    "rmse": 27.2,
+    "n": 74572,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 46,
+    "tier": "bronze",
+    "rmse": 29.47,
+    "n": 137954,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 46,
+    "tier": "silver",
+    "rmse": 26.32,
+    "n": 137423,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 46,
+    "tier": "gold",
+    "rmse": 33.16,
+    "n": 137676,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 48,
+    "tier": "bronze",
+    "rmse": 29.69,
+    "n": 38919,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 48,
+    "tier": "silver",
+    "rmse": 30.83,
+    "n": 39359,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 48,
+    "tier": "gold",
+    "rmse": 33.34,
+    "n": 39418,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 49,
+    "tier": "bronze",
+    "rmse": 24.48,
+    "n": 80936,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 49,
+    "tier": "silver",
+    "rmse": 16.83,
+    "n": 80979,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 49,
+    "tier": "gold",
+    "rmse": 27.98,
+    "n": 81104,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 50,
+    "tier": "bronze",
+    "rmse": 22.86,
+    "n": 58272,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 50,
+    "tier": "silver",
+    "rmse": 16.87,
+    "n": 58339,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 50,
+    "tier": "gold",
+    "rmse": 27.33,
+    "n": 58596,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 51,
+    "tier": "bronze",
+    "rmse": 19.38,
+    "n": 119439,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 51,
+    "tier": "silver",
+    "rmse": 15.2,
+    "n": 119587,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 51,
+    "tier": "gold",
+    "rmse": 20.79,
+    "n": 119742,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 52,
+    "tier": "bronze",
+    "rmse": 27.46,
+    "n": 59780,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 52,
+    "tier": "silver",
+    "rmse": 32.56,
+    "n": 59661,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 52,
+    "tier": "gold",
+    "rmse": 30.31,
+    "n": 60359,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 53,
+    "tier": "bronze",
+    "rmse": 24.32,
+    "n": 60536,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 53,
+    "tier": "silver",
+    "rmse": 24.81,
+    "n": 59976,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 53,
+    "tier": "gold",
+    "rmse": 28.7,
+    "n": 60314,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 54,
+    "tier": "bronze",
+    "rmse": 41.76,
+    "n": 59799,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 54,
+    "tier": "silver",
+    "rmse": 40.38,
+    "n": 59791,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 54,
+    "tier": "gold",
+    "rmse": 43.68,
+    "n": 60124,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 55,
+    "tier": "bronze",
+    "rmse": 16.3,
+    "n": 72650,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 55,
+    "tier": "silver",
+    "rmse": 18.55,
+    "n": 72782,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 55,
+    "tier": "gold",
+    "rmse": 29.23,
+    "n": 64172,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 56,
+    "tier": "bronze",
+    "rmse": 33.4,
+    "n": 83342,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 56,
+    "tier": "silver",
+    "rmse": 22.98,
+    "n": 83950,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 56,
+    "tier": "gold",
+    "rmse": 33.51,
+    "n": 84260,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 57,
+    "tier": "bronze",
+    "rmse": 23.77,
+    "n": 65019,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 57,
+    "tier": "silver",
+    "rmse": 22.21,
+    "n": 64926,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 57,
+    "tier": "gold",
+    "rmse": 30.21,
+    "n": 65072,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 58,
+    "tier": "bronze",
+    "rmse": 38.64,
+    "n": 76744,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 58,
+    "tier": "silver",
+    "rmse": 29.28,
+    "n": 76207,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 58,
+    "tier": "gold",
+    "rmse": 37.29,
+    "n": 76479,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 59,
+    "tier": "bronze",
+    "rmse": 46.51,
+    "n": 89520,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 59,
+    "tier": "silver",
+    "rmse": 39.84,
+    "n": 89728,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 59,
+    "tier": "gold",
+    "rmse": 44.83,
+    "n": 89615,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 60,
+    "tier": "bronze",
+    "rmse": 24.08,
+    "n": 74030,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 60,
+    "tier": "silver",
+    "rmse": 19.81,
+    "n": 74201,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 60,
+    "tier": "gold",
+    "rmse": 30.24,
+    "n": 74118,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 63,
+    "tier": "bronze",
+    "rmse": 35.97,
+    "n": 445,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 63,
+    "tier": "silver",
+    "rmse": 67.62,
+    "n": 445,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 63,
+    "tier": "gold",
+    "rmse": 71.86,
+    "n": 445,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 68,
+    "tier": "bronze",
+    "rmse": 31.24,
+    "n": 99065,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 68,
+    "tier": "silver",
+    "rmse": 24.41,
+    "n": 98909,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 68,
+    "tier": "gold",
+    "rmse": 34.79,
+    "n": 98795,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 69,
+    "tier": "bronze",
+    "rmse": 21.94,
+    "n": 110224,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 69,
+    "tier": "silver",
+    "rmse": 23.88,
+    "n": 110056,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 69,
+    "tier": "gold",
+    "rmse": 23.13,
+    "n": 110106,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 70,
+    "tier": "bronze",
+    "rmse": 47.72,
+    "n": 197228,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 70,
+    "tier": "silver",
+    "rmse": 35.17,
+    "n": 197297,
+    "fitted": false
+   },
+   {
+    "standard": "baked",
+    "medal": 70,
+    "tier": "gold",
+    "rmse": 60.05,
+    "n": 197196,
+    "fitted": false
+   }
+  ]
+ },
+ "baseline_ramps": {
+  "_what": "unconstrained two-stop ramp per tier (dark -> light over G), shared stops; not used by the lab",
+  "stop0": 0.6306,
+  "stop1": 0.9414,
+  "tiers": {
+   "bronze": {
+    "dark": [
+     0.8642,
+     0.6513,
+     0.4644
+    ],
+    "light": [
+     0.9501,
+     0.8364,
+     0.7207
+    ]
+   },
+   "silver": {
+    "dark": [
+     0.3994,
+     0.6064,
+     0.7562
+    ],
+    "light": [
+     0.816,
+     0.8994,
+     0.9392
+    ]
+   },
+   "gold": {
+    "dark": [
+     0.9397,
+     0.728,
+     0.2585
+    ],
+    "light": [
+     0.9753,
+     0.8575,
+     0.4077
+    ]
+   },
+   "platinum": {
+    "dark": [
+     0.3126,
+     0.4338,
+     0.5319
+    ],
+    "light": [
+     0.8078,
+     0.8584,
+     0.8933
+    ]
+   }
+  }
+ }
+}

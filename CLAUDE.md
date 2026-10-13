@@ -27,6 +27,22 @@ known icons, but to find a transformation trustworthy enough to **generate corre
 species that don't have official Mega Energy art yet.** Keep this mission in view even when a
 session's task is narrow (e.g. a UI tweak to `mega_lab.html`) — it's why the tool exists.
 
+**The ordinary Candy / Candy XL is the solved contrast case (2026-09-26):** its shader (`NianticCustom/UI/TriColorSplat`,
+also read out of the APK — `research_notes/candy-shader.md`) is a plain `R·_ColorR + G·_ColorG + B·_ColorB` mask with
+nothing to fit, coloured per family from `raw/candy/PokemonCandyColorData.json` (`_ColorG ← PrimaryColor` body,
+`_ColorR ← SecondaryColor` stripes — confirmed against an in-game Nymble Candy XL, RMSE 7.6 vs 99 swapped). The lab's
+**Candy** tab renders it; the XL art (220×232) is placed at (14, 19) inside the game's 256×256 icon frame.
+
+**Medals are the third case (2026-09-26), half-solved:** every medal (`Badge_<n>.png`, PokeMiners `Images/Badges/`)
+and the four tier rings are RGB templates — G = the tier metal with the shading baked into G's intensity, B = a fixed
+per-medal accent, R unused. The APK carries the **inputs** (`Niantic.Holoholo.BadgeMaterialConfig`: MetalColor /
+MetalPower per tier, DetailColor per medal — `raw/medals/BadgeMaterialConfig.json`) but **not the shader** (`ma_Badge`,
+remote bundle), so the tint is **fitted** to four in-game screenshots (`research_notes/medal-shader.md`,
+`raw/medals/MedalTintModel.json`: `mix(MetalColor^(MetalPower·k(G)), white, w(G))` + one light ramp; RMSE ≈ 11–15
+against JPEG references). The old pre-painted `_1_01/_2_01/_3_01` tiers were baked from the same templates but with an
+older palette — a check, not a standard. **`medal_lab.html`** is the separate tool for it (same house rules: the
+game's values are constants, only the fitted constants have sliders).
+
 **Before doing new discovery work, read `research_notes/README.md` first.** A lot of trial-and-error
 has already happened; the goal is to build on it, not repeat it.
 
@@ -71,7 +87,8 @@ slider edits; the header's "Δ vs generic" shows the gain; fits keep neighbourin
 species they are a guess until its material is dumped. The earlier fitted model (Venusaur fit, RMSE 11.7)
 and its colour editors, stage toggles and shader menu were removed: they modelled things the real shader
 does not do. **Do not add controls for known quantities** (colours, glass constants, blend maths) — the
-user asked for those to be constants.
+user asked for those to be constants. The **Candy** page (2026-09-26) is separate: everything about it is known, so
+its only inputs are the two colours (family from the JSON, or custom).
 
 ## Commands
 There is no build step. Open `mega_lab.html` directly in a browser — double-click it, or
@@ -86,14 +103,43 @@ There is no build step. Open `mega_lab.html` directly in a browser — double-cl
   that entry; the shared targets fit one set and apply it to every entry; "Fit each reference separately"
   + "Apply each fit to its entry" fits all references from their own values. Undo restores.
 - **Colour table tab** — every species' material colours (from the JSON) in one table.
+- **Candy tab** — the striped Candy, Candy XL and the small icon-style candy (`candy_vector_rgb`, 64×64, shown at 2×)
+  rendered together with the real candy shader at native size (Candy / XL in the game's 256×256 icon frame; the XL art
+  sits at (14, 19), see `scripts/embed_candy.py`; the small icon is layered as in github.com/aqi94/pogo-candy — silhouette
+  (alpha) in the base colour, stripes (R) in the stripe colour, glint (B) white on top, `compositeSmall`): pick a family (dropdown from `PokemonCandyColorData.json`, ←/→ step) or type / pick custom
+  base and stripe colours (hex or colour input; `_ColorB` stays the material's white). Reset to family, Swap base ↔
+  stripe (the two possible channel mappings), Copy JSON. Remembered in `localStorage megaLab.candy`.
 - **Output folder… / Save PNG / Render all…** (top toolbar) — renders the current shader +
   parameters to a real PNG, named like the reference images
   (`GO_<Species>_Mega_Energy[_X|_Y|_Z].png`). "Save PNG" does the current entry; "Render all…" does
-  all 96. In Chrome/Edge, "Output folder…" lets you pick a local folder (e.g. an `outputs/` you
+  all 96. On the Candy tab the same buttons save Bulbapedia-style names: `GO <Species> Candy.png` (the small icon),
+  `GO <Species> Candy artwork.png` (the full-size art) and `GO <Species> Candy XL.png` (custom colours:
+  `GO Custom <BASE> <STRIPE> …`), or every family into `candy_renders.zip`. In Chrome/Edge, "Output folder…" lets you pick a local folder (e.g. an `outputs/` you
   create) to write directly into; other browsers fall back to normal per-file downloads.
 
 Nothing else typed into the page persists back to this repo — it's a scratchpad for eyeballing (and
 now rendering) the model, not an editor that writes source files.
+
+**`medal_lab.html`** (2026-09-26) — the medal tool, the same shape with no build step: pick a medal (←/→) and a
+tier (Bronze · Silver · Gold · Platinum, keys 1–4); the **Inputs** card shows the game's values for that pick
+(read-only), **What if** lets you substitute a custom MetalColor / MetalPower or accent, **Model** has one slider per
+fitted constant (Reset to fitted, Copy JSON); the **Render** card draws the composed medal (ring + white disc + icon),
+the icon and the ring at native size, and all four tiers; **Compare** (the four medals with a screenshot) shows the
+aligned reference, the difference and the RMSE. **Layout** (user request 2026-09-26: some templates are cropped to the
+art, so the default placement can sit off-centre): drag the icon inside the fixed ring with photo-editor guides
+(frame centre crosshair, the icon's box and centre, snap to centre — Alt skips it, live Δx / Δy / × readout), wheel or
+the Scale slider to scale with the aspect ratio always fixed, arrow keys nudge 1 px (Shift 10) while the render has
+focus, a White-disc toggle, "Guides always"; kept per medal (`layouts` in `medalLab.state`), used by the tier strip and
+by every export. **The default placement is the measured rule (2026-09-27, `raw/medals/MedalLayouts.json`,
+`scripts/measure_layout.py`):** the ring fills the frame, the disc is the tier ring's own inner radius, the icon is the
+game's 512-px texture (256 for PokeMiners' 256-px templates) with its full rect centred and side = half the ring's outer
+diameter (anchor 0.25; 0.64 for Showcase Star's override) — one constant pixel scale, so a template cropped to its art
+(Ultra League) is small and off-centre until the measured deviation or the user corrects it; the two insets
+(`raw/medals/insets/`, Rising Star Duo / Mega Evolution Guru) are drawn on top at the same scale, centred, with a toggle.
+Save PNG writes `GO_<Title>_Medal_<Tier>[_Icon|_Ring].png`; Render
+all… zips every medal × tier into `medal_renders.zip`. Remembered in `localStorage medalLab.state`.
+`window.MedalLab` is the automation API (`scripts/lab_driver.mjs --global MedalLab`). Rebuild the embedded data with
+`python scripts/embed_medals.py` after anything in `raw/medals/` changes; refit with `python scripts/fit_medals.py`.
 
 Estimating the unknown floats (refit, replace a reference, constants / cohorts, inference for unreferenced entries): use the
 `mega-energy-floats` skill (`.claude/skills/`, local) — it drives the lab headless through `window.MegaLab`.
@@ -111,8 +157,20 @@ Estimating the unknown floats (refit, replace a reference, constants / cohorts, 
     dex number (plus `_MEGA_X`/`_MEGA_Y`/`_MEGA_Z`/`_Mega_Z` suffixes for multi-form Megas).
   - `names.json` — dex number → species name, used only to label entries and to build export
     filenames.
+  - `candy/` — the Candy tab's inputs: `candy_rgb.png` (256×256), `LV40_XLCandy_RGB_PSD.png` (220×232) and
+    `candy_vector_rgb.png` (64×64, the small icon, extracted from the APK's `sharedassets1.assets` path ID 961), the
+    R/G/B-mask templates, `PokemonCandyColorData.json` (549 families' Primary / Secondary colours) and
+    `standards/GO_Nymble_Candy_XL.png` (an in-game icon: fixes the XL frame offset and the channel mapping). Embedded as
+    `<script id="lab-candy">` by `scripts/embed_candy.py` (run it after any of them changes; idempotent).
   - `standards/{gold,silver,bronze}/` — in-game reference images the model is checked against, sorted
     by trust tier (see `research_notes/reference-tiers.md`).
+  - `medals/` — the medal lab's inputs: `templates/Badge_<n>.png` (57 RGB templates + the route medal's mask and
+    sprite), `rings/badge_ring_<1-4>.png` (one pure-G ring per tier), `BadgeMaterialConfig.json` (the tier palette and
+    per-medal accents read out of the APK), `MedalTintModel.json` (the fitted tint constants + scores), `names.json`
+    (enum + title per medal), `MedalLayouts.json` (the measured composition rule + per-medal deviations), `insets/`
+    (the two pre-painted overlays) and `standards/` (nine in-game screenshots, the three baked Unown tiers, and
+    `aligned/` — the screenshots' icons on the template grid, for the Compare view). Embedded as
+    `<script id="lab-medals">` by `scripts/embed_medals.py` (idempotent).
 - `research_notes/` — durable, distilled findings from past sessions (start at `README.md`). Add to
   this when you learn something new; don't just leave it in your own session's memory.
 

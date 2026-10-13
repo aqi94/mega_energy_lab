@@ -8,6 +8,8 @@ context up front; each one below is a self-contained topic.
 | File | Read this when you need... |
 |---|---|
 | [`shader-source.md`](shader-source.md) | **Read first.** The real shader, recovered from the APK on 2026-09-20: its properties, the exact per-pixel maths, the generic icon's material values, what it overturns in the fitted notes below, and the one input still missing (per-species float values). Where it disagrees with another file, it wins. |
+| [`candy-shader.md`](candy-shader.md) | The ordinary Candy / Candy XL shader (`NianticCustom/UI/TriColorSplat`), read out of the APK on 2026-09-26: a plain `R·_ColorR + G·_ColorG + B·_ColorB` mask with nothing to fit — the contrast case to Mega Energy, and what the lab's **Candy** tab renders. |
+| [`medal-shader.md`](medal-shader.md) | Medals (2026-09-26): the tier palette and per-medal accents read out of the APK (`BadgeMaterialConfig`), the RGB-template channel roles, the tint **fitted** to in-game screenshots (the shader itself is in a remote bundle), the composition, and the route medal's own shader. What `medal_lab.html` renders. |
 | [`inputs.md`](inputs.md) | What the template's R/G/B channels and each JSON color actually mean. Start here — these are the most load-bearing, highest-confidence facts. |
 | [`reference-tiers.md`](reference-tiers.md) | How to judge whether a candidate model is actually improving, and why unweighted error metrics mislead you here. |
 | [`models-tried.md`](models-tried.md) | The current best-known formula, its accuracy ceiling, and the lineage of approaches that got there — so you don't re-invent or re-reject the same model. |

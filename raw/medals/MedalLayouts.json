@@ -1,0 +1,90 @@
+{
+ "_what": "Medal composition measured on in-game screenshots (scripts/measure_layout.py, 2026-09-27). rule: the tier ring fills the frame; the white disc is the ring's own inner radius; the icon is the game's texture (512 px, or 256 for PokeMiners' 256-px templates) drawn with its full rect centred on the ring and side = (1 - 2*anchor) * ring outer diameter, anchor 0.25 (padding override: 0.18); insets at the same pixel scale, centred. medals[] = measured deviations from that rule (scale multiplier, centre offset as a fraction of the frame) - the lab's per-medal defaults.",
+ "anchorDefault": 0.25,
+ "ringOuterOnScreen": {
+  "platinum_badge_38.PNG": 332.3,
+  "platinum_badge_43.PNG": 332.3,
+  "platinum_badge_50.PNG": 332.2,
+  "platinum_badge_53.PNG": 332.3,
+  "platinum_badge_70.PNG": 332.3,
+  "platinum_badge_80.PNG": 332.3,
+  "platinum_badge_83.PNG": 332.3,
+  "silver_badge_1004.PNG": 333.7,
+  "IMG_5982.PNG": 331.4
+ },
+ "medals": {
+  "38": {
+   "scale": 0.9912,
+   "dx": -0.0008,
+   "dy": 0.0004,
+   "standard": "platinum_badge_38.PNG",
+   "tier": "platinum"
+  },
+  "43": {
+   "scale": 0.9921,
+   "dx": 0.0002,
+   "dy": 0.0008,
+   "standard": "platinum_badge_43.PNG",
+   "tier": "platinum"
+  },
+  "50": {
+   "scale": 0.9915,
+   "dx": 0.0002,
+   "dy": -0.0007,
+   "standard": "platinum_badge_50.PNG",
+   "tier": "platinum"
+  },
+  "53": {
+   "scale": 0.9941,
+   "dx": 0.0002,
+   "dy": 0.0287,
+   "standard": "platinum_badge_53.PNG",
+   "tier": "platinum"
+  },
+  "70": {
+   "scale": 0.9938,
+   "dx": 0.0006,
+   "dy": 0.0006,
+   "standard": "platinum_badge_70.PNG",
+   "tier": "platinum"
+  },
+  "80": {
+   "scale": 0.9906,
+   "dx": -0.0009,
+   "dy": 0.001,
+   "standard": "platinum_badge_80.PNG",
+   "tier": "platinum"
+  },
+  "83": {
+   "scale": 0.9881,
+   "dx": -0.0006,
+   "dy": -0.0009,
+   "standard": "platinum_badge_83.PNG",
+   "tier": "platinum"
+  },
+  "1004": {
+   "scale": 1.0295,
+   "dx": -0.0001,
+   "dy": -0.0019,
+   "standard": "silver_badge_1004.PNG",
+   "tier": "silver"
+  },
+  "77": {
+   "scale": 1.1465,
+   "dx": 0.018,
+   "dy": 0.0237,
+   "standard": "IMG_5982.PNG",
+   "tier": "gold"
+  }
+ },
+ "inset": {
+  "70": {
+   "scale_rel": 0.985,
+   "centre_offset_tpl": [
+    -1.550496219713539,
+    -3.100992439427078
+   ],
+   "rmse": 16.7081
+  }
+ }
+}

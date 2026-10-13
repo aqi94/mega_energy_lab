@@ -45,3 +45,6 @@ per-pixel palette fits still leaving residual error) point to the same conclusio
 reference art may not be the deterministic output of one shader over today's JSON colors** — it
 might be older/hand-touched marketing art rather than a straight render. Judge new models by
 "is this an improvement", not "does this hit zero error".
+
+**`legacy/`** (2026-10-11) holds images of *older builds* kept out of every tier and every constants statistic:
+`GO_Mega_Energy_2021.png` (Bulbagarden's 2021 ImageMagick thumbnail of the generic icon; finding #33).

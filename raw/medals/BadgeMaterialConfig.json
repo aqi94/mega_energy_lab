@@ -1,0 +1,916 @@
+{
+ "_source": "Pokemon GO 0.429.1 Android APK, sharedassets1.assets pathID 162909 (Niantic.Holoholo.BadgeMaterialConfig), decoded 2026-09-26",
+ "_fields": "metalSettingsPairs[] {badgeRank, MetalColor, MetalPower, MetalSaturation}; detailSettingPairs[] {detailType, DetailColor}; badgePaddingOverridePairs[] {detailType, EventBadgeAnchorOverride, StandardBadgeAnchorOverride}; metalSheenTextureAddress. Colours are 0-1 floats in Gamma space (the project's colour space); alpha is stored but unused.",
+ "BadgeRank": {
+  "0": "NONE",
+  "1": "BRONZE",
+  "2": "SILVER",
+  "3": "GOLD",
+  "4": "PLATINUM"
+ },
+ "tiers": {
+  "bronze": {
+   "badgeRank": 1,
+   "MetalColor": [
+    0.960784,
+    0.811765,
+    0.654902,
+    1.0
+   ],
+   "MetalColor255": [
+    245,
+    207,
+    167
+   ],
+   "MetalPower": 3.74,
+   "MetalSaturation": 1.0
+  },
+  "silver": {
+   "badgeRank": 2,
+   "MetalColor": [
+    0.694118,
+    0.847059,
+    0.913725,
+    1.0
+   ],
+   "MetalColor255": [
+    177,
+    216,
+    233
+   ],
+   "MetalPower": 4.18,
+   "MetalSaturation": 1.0
+  },
+  "gold": {
+   "badgeRank": 3,
+   "MetalColor": [
+    1.0,
+    0.87451,
+    0.098039,
+    1.0
+   ],
+   "MetalColor255": [
+    255,
+    223,
+    25
+   ],
+   "MetalPower": 4.42,
+   "MetalSaturation": 1.0
+  },
+  "platinum": {
+   "badgeRank": 4,
+   "MetalColor": [
+    0.654902,
+    0.756863,
+    0.811765,
+    1.0
+   ],
+   "MetalColor255": [
+    167,
+    193,
+    207
+   ],
+   "MetalPower": 4.0,
+   "MetalSaturation": 1.0
+  }
+ },
+ "details": {
+  "0": {
+   "type": "BadgeUnset",
+   "DetailColor": [
+    1.0,
+    0.0,
+    0.930164,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    0,
+    237
+   ]
+  },
+  "1": {
+   "type": "BadgeTravelKm",
+   "DetailColor": [
+    0.027451,
+    0.517647,
+    0.964706,
+    0.0
+   ],
+   "DetailColor255": [
+    7,
+    132,
+    246
+   ]
+  },
+  "2": {
+   "type": "BadgePokedexEntries",
+   "DetailColor": [
+    1.0,
+    0.035294,
+    0.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    9,
+    0
+   ]
+  },
+  "3": {
+   "type": "BadgeCaptureTotal",
+   "DetailColor": [
+    1.0,
+    0.035294,
+    0.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    9,
+    0
+   ]
+  },
+  "5": {
+   "type": "BadgeEvolvedTotal",
+   "DetailColor": [
+    0.0,
+    0.47451,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    0,
+    121,
+    255
+   ]
+  },
+  "6": {
+   "type": "BadgeHatchedTotal",
+   "DetailColor": [
+    0.231373,
+    0.858824,
+    0.0,
+    0.0
+   ],
+   "DetailColor255": [
+    59,
+    219,
+    0
+   ]
+  },
+  "8": {
+   "type": "BadgePokestopsVisited",
+   "DetailColor": [
+    0.0,
+    0.560784,
+    0.988235,
+    0.0
+   ],
+   "DetailColor255": [
+    0,
+    143,
+    252
+   ]
+  },
+  "9": {
+   "type": "BadgeUniquePokestops",
+   "DetailColor": [
+    0.270588,
+    0.486275,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    69,
+    124,
+    255
+   ]
+  },
+  "11": {
+   "type": "BadgeBigMagikarp",
+   "DetailColor": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    255,
+    255
+   ]
+  },
+  "13": {
+   "type": "BadgeBattleAttackWon",
+   "DetailColor": [
+    1.0,
+    0.054902,
+    0.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    14,
+    0
+   ]
+  },
+  "14": {
+   "type": "BadgeBattleTrainingWon",
+   "DetailColor": [
+    0.0,
+    0.956863,
+    0.658824,
+    0.0
+   ],
+   "DetailColor255": [
+    0,
+    244,
+    168
+   ]
+  },
+  "36": {
+   "type": "BadgeSmallRattata",
+   "DetailColor": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    255,
+    255
+   ]
+  },
+  "37": {
+   "type": "BadgePikachu",
+   "DetailColor": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    255,
+    255
+   ]
+  },
+  "38": {
+   "type": "BadgeUnown",
+   "DetailColor": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    255,
+    255
+   ]
+  },
+  "39": {
+   "type": "BadgePokedexEntriesGen2",
+   "DetailColor": [
+    1.0,
+    0.035294,
+    0.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    9,
+    0
+   ]
+  },
+  "40": {
+   "type": "BadgeRaidBattleWon",
+   "DetailColor": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    255,
+    255
+   ]
+  },
+  "41": {
+   "type": "BadgeLegendaryBattleWon",
+   "DetailColor": [
+    0.364706,
+    0.301961,
+    0.898039,
+    0.0
+   ],
+   "DetailColor255": [
+    93,
+    77,
+    229
+   ]
+  },
+  "42": {
+   "type": "BadgeBerriesFed",
+   "DetailColor": [
+    0.945098,
+    0.184314,
+    0.482353,
+    0.0
+   ],
+   "DetailColor255": [
+    241,
+    47,
+    123
+   ]
+  },
+  "43": {
+   "type": "BadgeHoursDefended",
+   "DetailColor": [
+    0.0,
+    0.733333,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    0,
+    187,
+    255
+   ]
+  },
+  "45": {
+   "type": "BadgePokedexEntriesGen3",
+   "DetailColor": [
+    1.0,
+    0.035294,
+    0.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    9,
+    0
+   ]
+  },
+  "46": {
+   "type": "BadgeChallengeQuests",
+   "DetailColor": [
+    0.0,
+    0.823529,
+    0.847059,
+    0.0
+   ],
+   "DetailColor255": [
+    0,
+    210,
+    216
+   ]
+  },
+  "48": {
+   "type": "BadgeMaxLevelFriends",
+   "DetailColor": [
+    0.0,
+    0.886275,
+    0.678431,
+    0.0
+   ],
+   "DetailColor255": [
+    0,
+    226,
+    173
+   ]
+  },
+  "49": {
+   "type": "BadgeTrading",
+   "DetailColor": [
+    0.921569,
+    0.0,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    235,
+    0,
+    255
+   ]
+  },
+  "50": {
+   "type": "BadgeTradingDistance",
+   "DetailColor": [
+    0.964706,
+    0.0,
+    0.894118,
+    0.0
+   ],
+   "DetailColor255": [
+    246,
+    0,
+    228
+   ]
+  },
+  "51": {
+   "type": "BadgePokedexEntriesGen4",
+   "DetailColor": [
+    1.0,
+    0.035294,
+    0.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    9,
+    0
+   ]
+  },
+  "52": {
+   "type": "BadgeGreatLeague",
+   "DetailColor": [
+    0.929412,
+    0.062745,
+    0.062745,
+    0.0
+   ],
+   "DetailColor255": [
+    237,
+    16,
+    16
+   ]
+  },
+  "53": {
+   "type": "BadgeUltraLeague",
+   "DetailColor": [
+    0.341176,
+    0.341176,
+    0.341176,
+    0.0
+   ],
+   "DetailColor255": [
+    87,
+    87,
+    87
+   ]
+  },
+  "54": {
+   "type": "BadgeMasterLeague",
+   "DetailColor": [
+    0.956863,
+    0.082353,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    244,
+    21,
+    255
+   ]
+  },
+  "55": {
+   "type": "BadgePhotobomb",
+   "DetailColor": [
+    0.25098,
+    0.65098,
+    0.054902,
+    0.0
+   ],
+   "DetailColor255": [
+    64,
+    166,
+    14
+   ]
+  },
+  "56": {
+   "type": "BadgePokedexEntriesGen5",
+   "DetailColor": [
+    1.0,
+    0.1,
+    0.1,
+    1.0
+   ],
+   "DetailColor255": [
+    255,
+    26,
+    26
+   ],
+   "duplicates": [
+    {
+     "type": "BadgePokedexEntriesGen5",
+     "DetailColor": [
+      1.0,
+      0.035294,
+      0.0,
+      0.0
+     ],
+     "DetailColor255": [
+      255,
+      9,
+      0
+     ]
+    }
+   ]
+  },
+  "57": {
+   "type": "BadgePokemonPurified",
+   "DetailColor": [
+    0.0,
+    0.517647,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    0,
+    132,
+    255
+   ]
+  },
+  "58": {
+   "type": "BadgeRocketGruntsDefeated",
+   "DetailColor": [
+    0.945098,
+    0.286275,
+    0.0,
+    0.0
+   ],
+   "DetailColor255": [
+    241,
+    73,
+    0
+   ]
+  },
+  "59": {
+   "type": "BadgeRocketGiovanniDefeated",
+   "DetailColor": [
+    0.945098,
+    0.286275,
+    0.0,
+    0.0
+   ],
+   "DetailColor255": [
+    241,
+    73,
+    0
+   ]
+  },
+  "60": {
+   "type": "BadgeBuddyBest",
+   "DetailColor": [
+    0.839216,
+    0.098039,
+    0.090196,
+    0.0
+   ],
+   "DetailColor255": [
+    214,
+    25,
+    23
+   ]
+  },
+  "61": {
+   "type": "BadgePokedexEntriesGen6",
+   "DetailColor": [
+    1.0,
+    0.035294,
+    0.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    9,
+    0
+   ]
+  },
+  "62": {
+   "type": "BadgePokedexEntriesGen7",
+   "DetailColor": [
+    1.0,
+    0.035294,
+    0.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    9,
+    0
+   ]
+  },
+  "63": {
+   "type": "BadgePokedexEntriesGen8",
+   "DetailColor": [
+    1.0,
+    0.035294,
+    0.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    9,
+    0
+   ]
+  },
+  "64": {
+   "type": "Badge7DayStreaks",
+   "DetailColor": [
+    0.0,
+    0.607843,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    0,
+    155,
+    255
+   ]
+  },
+  "65": {
+   "type": "BadgeUniqueRaidBossesDefeated",
+   "DetailColor": [
+    0.898039,
+    0.172549,
+    0.043137,
+    0.0
+   ],
+   "DetailColor255": [
+    229,
+    44,
+    11
+   ]
+  },
+  "67": {
+   "type": "BadgePokemonCaughtAtYourLures",
+   "DetailColor": [
+    1.0,
+    0.035294,
+    0.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    9,
+    0
+   ]
+  },
+  "68": {
+   "type": "BadgeWayfarer",
+   "DetailColor": [
+    0.972549,
+    0.227451,
+    0.498039,
+    0.0
+   ],
+   "DetailColor255": [
+    248,
+    58,
+    127
+   ]
+  },
+  "69": {
+   "type": "BadgeTotalMegaEvos",
+   "DetailColor": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    255,
+    255
+   ]
+  },
+  "70": {
+   "type": "BadgeUniqueMegaEvos",
+   "DetailColor": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    255,
+    255
+   ]
+  },
+  "72": {
+   "type": "BadgeRouteAccepted",
+   "DetailColor": [
+    0.203922,
+    0.823529,
+    0.956863,
+    0.0
+   ],
+   "DetailColor255": [
+    52,
+    210,
+    244
+   ]
+  },
+  "73": {
+   "type": "BadgeTrainersReferred",
+   "DetailColor": [
+    1.0,
+    0.035294,
+    0.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    9,
+    0
+   ]
+  },
+  "74": {
+   "type": "BadgePokestopsScanned",
+   "DetailColor": [
+    0.207843,
+    0.501961,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    53,
+    128,
+    255
+   ]
+  },
+  "76": {
+   "type": "BadgeRaidBattleStat",
+   "DetailColor": [
+    0.611765,
+    0.690196,
+    0.0,
+    0.0
+   ],
+   "DetailColor255": [
+    156,
+    176,
+    0
+   ]
+  },
+  "77": {
+   "type": "BadgeTotalRoutePlay",
+   "DetailColor": [
+    0.058824,
+    0.639216,
+    0.952941,
+    0.0
+   ],
+   "DetailColor255": [
+    15,
+    163,
+    243
+   ]
+  },
+  "78": {
+   "type": "BadgeUniqueRoutePlay",
+   "DetailColor": [
+    0.058824,
+    0.639216,
+    0.952941,
+    0.0
+   ],
+   "DetailColor255": [
+    15,
+    163,
+    243
+   ]
+  },
+  "79": {
+   "type": "BadgePokedexEntriesGen8A",
+   "DetailColor": [
+    1.0,
+    0.1,
+    0.1,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    26,
+    26
+   ]
+  },
+  "80": {
+   "type": "BadgeCaptureSmallPokemon",
+   "DetailColor": [
+    0.654902,
+    0.266667,
+    0.878431,
+    0.0
+   ],
+   "DetailColor255": [
+    167,
+    68,
+    224
+   ]
+  },
+  "81": {
+   "type": "BadgeCaptureLargePokemon",
+   "DetailColor": [
+    0.654902,
+    0.266667,
+    0.878431,
+    0.0
+   ],
+   "DetailColor255": [
+    167,
+    68,
+    224
+   ]
+  },
+  "83": {
+   "type": "BadgePartyChallengesCompleted",
+   "DetailColor": [
+    1.0,
+    0.0,
+    0.196078,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    0,
+    50
+   ]
+  },
+  "85": {
+   "type": "BadgeCheckIns",
+   "DetailColor": [
+    1.0,
+    0.32549,
+    0.270588,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    83,
+    69
+   ]
+  },
+  "87": {
+   "type": "BadgeBreadBattlesWon",
+   "DetailColor": [
+    0.870588,
+    0.05098,
+    0.529412,
+    0.0
+   ],
+   "DetailColor255": [
+    222,
+    13,
+    135
+   ]
+  },
+  "88": {
+   "type": "BadgeBreadBattlesDoughWon",
+   "DetailColor": [
+    0.596078,
+    0.0,
+    0.364706,
+    0.0
+   ],
+   "DetailColor255": [
+    152,
+    0,
+    93
+   ]
+  },
+  "1004": {
+   "type": "BadgeMaxSizeFirstPlaceWin",
+   "DetailColor": [
+    0.847059,
+    0.870588,
+    0.411765,
+    0.0
+   ],
+   "DetailColor255": [
+    216,
+    222,
+    105
+   ]
+  },
+  "5072": {
+   "type": "BadgeGofest2020Global",
+   "DetailColor": [
+    1.0,
+    1.0,
+    1.0,
+    0.0
+   ],
+   "DetailColor255": [
+    255,
+    255,
+    255
+   ]
+  }
+ },
+ "padding": [
+  {
+   "detailType": 1004,
+   "type": "BadgeMaxSizeFirstPlaceWin",
+   "EventBadgeAnchorOverride": 0.0,
+   "StandardBadgeAnchorOverride": 0.18
+  }
+ ],
+ "metalSheenTextureAddress": "tx_badge_frame_shine"
+}

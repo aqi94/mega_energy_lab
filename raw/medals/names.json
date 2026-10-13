@@ -1,0 +1,317 @@
+{
+ "0": {
+  "enum": "BadgeUnset",
+  "title": "Unset",
+  "titled": false
+ },
+ "1": {
+  "enum": "BadgeTravelKm",
+  "title": "Jogger",
+  "titled": true
+ },
+ "2": {
+  "enum": "BadgePokedexEntries",
+  "title": "Kanto",
+  "titled": true
+ },
+ "3": {
+  "enum": "BadgeCaptureTotal",
+  "title": "Collector",
+  "titled": true
+ },
+ "5": {
+  "enum": "BadgeEvolvedTotal",
+  "title": "Scientist",
+  "titled": true
+ },
+ "6": {
+  "enum": "BadgeHatchedTotal",
+  "title": "Breeder",
+  "titled": true
+ },
+ "8": {
+  "enum": "BadgePokestopsVisited",
+  "title": "Backpacker",
+  "titled": true
+ },
+ "9": {
+  "enum": "BadgeUniquePokestops",
+  "title": "Sightseer",
+  "titled": true
+ },
+ "11": {
+  "enum": "BadgeBigMagikarp",
+  "title": "Fisher",
+  "titled": true
+ },
+ "13": {
+  "enum": "BadgeBattleAttackWon",
+  "title": "Battle Girl",
+  "titled": true
+ },
+ "14": {
+  "enum": "BadgeBattleTrainingWon",
+  "title": "Ace Trainer",
+  "titled": true
+ },
+ "36": {
+  "enum": "BadgeSmallRattata",
+  "title": "Youngster",
+  "titled": true
+ },
+ "37": {
+  "enum": "BadgePikachu",
+  "title": "Pikachu Fan",
+  "titled": true
+ },
+ "38": {
+  "enum": "BadgeUnown",
+  "title": "Unown",
+  "titled": true
+ },
+ "39": {
+  "enum": "BadgePokedexEntriesGen2",
+  "title": "Johto",
+  "titled": true
+ },
+ "40": {
+  "enum": "BadgeRaidBattleWon",
+  "title": "Champion",
+  "titled": true
+ },
+ "41": {
+  "enum": "BadgeLegendaryBattleWon",
+  "title": "Battle Legend",
+  "titled": true
+ },
+ "42": {
+  "enum": "BadgeBerriesFed",
+  "title": "Berry Master",
+  "titled": true
+ },
+ "43": {
+  "enum": "BadgeHoursDefended",
+  "title": "Gym Leader",
+  "titled": true
+ },
+ "45": {
+  "enum": "BadgePokedexEntriesGen3",
+  "title": "Hoenn",
+  "titled": true
+ },
+ "46": {
+  "enum": "BadgeChallengeQuests",
+  "title": "Pokémon Ranger",
+  "titled": true
+ },
+ "48": {
+  "enum": "BadgeMaxLevelFriends",
+  "title": "Idol",
+  "titled": true
+ },
+ "49": {
+  "enum": "BadgeTrading",
+  "title": "Gentleman",
+  "titled": true
+ },
+ "50": {
+  "enum": "BadgeTradingDistance",
+  "title": "Pilot",
+  "titled": true
+ },
+ "51": {
+  "enum": "BadgePokedexEntriesGen4",
+  "title": "Sinnoh",
+  "titled": true
+ },
+ "52": {
+  "enum": "BadgeGreatLeague",
+  "title": "Great League Veteran",
+  "titled": true
+ },
+ "53": {
+  "enum": "BadgeUltraLeague",
+  "title": "Ultra League Veteran",
+  "titled": true
+ },
+ "54": {
+  "enum": "BadgeMasterLeague",
+  "title": "Master League Veteran",
+  "titled": true
+ },
+ "55": {
+  "enum": "BadgePhotobomb",
+  "title": "Cameraman",
+  "titled": true
+ },
+ "56": {
+  "enum": "BadgePokedexEntriesGen5",
+  "title": "Unova",
+  "titled": true
+ },
+ "57": {
+  "enum": "BadgePokemonPurified",
+  "title": "Purifier",
+  "titled": true
+ },
+ "58": {
+  "enum": "BadgeRocketGruntsDefeated",
+  "title": "Hero",
+  "titled": true
+ },
+ "59": {
+  "enum": "BadgeRocketGiovanniDefeated",
+  "title": "Ultra Hero",
+  "titled": true
+ },
+ "60": {
+  "enum": "BadgeBuddyBest",
+  "title": "Best Buddy",
+  "titled": true
+ },
+ "61": {
+  "enum": "BadgePokedexEntriesGen6",
+  "title": "Kalos",
+  "titled": true
+ },
+ "62": {
+  "enum": "BadgePokedexEntriesGen7",
+  "title": "Alola",
+  "titled": true
+ },
+ "63": {
+  "enum": "BadgePokedexEntriesGen8",
+  "title": "Galar",
+  "titled": true
+ },
+ "64": {
+  "enum": "Badge7DayStreaks",
+  "title": "Triathlete",
+  "titled": true
+ },
+ "65": {
+  "enum": "BadgeUniqueRaidBossesDefeated",
+  "title": "Rising Star",
+  "titled": true
+ },
+ "66": {
+  "enum": "BadgeRaidsWithFriends",
+  "title": "Rising Star Duo",
+  "titled": true
+ },
+ "67": {
+  "enum": "BadgePokemonCaughtAtYourLures",
+  "title": "Picnicker",
+  "titled": true
+ },
+ "68": {
+  "enum": "BadgeWayfarer",
+  "title": "Wayfarer",
+  "titled": true
+ },
+ "69": {
+  "enum": "BadgeTotalMegaEvos",
+  "title": "Successor",
+  "titled": true
+ },
+ "70": {
+  "enum": "BadgeUniqueMegaEvos",
+  "title": "Mega Evolution Guru",
+  "titled": true
+ },
+ "72": {
+  "enum": "BadgeRouteAccepted",
+  "title": "Route Accepted",
+  "titled": false
+ },
+ "73": {
+  "enum": "BadgeTrainersReferred",
+  "title": "Friend Finder",
+  "titled": true
+ },
+ "74": {
+  "enum": "BadgePokestopsScanned",
+  "title": "Scanner",
+  "titled": true
+ },
+ "76": {
+  "enum": "BadgeRaidBattleStat",
+  "title": "Raid Expert",
+  "titled": true
+ },
+ "77": {
+  "enum": "BadgeTotalRoutePlay",
+  "title": "Expert Navigator",
+  "titled": true
+ },
+ "78": {
+  "enum": "BadgeUniqueRoutePlay",
+  "title": "Route Scout",
+  "titled": true
+ },
+ "79": {
+  "enum": "BadgePokedexEntriesGen8A",
+  "title": "Hisui",
+  "titled": true
+ },
+ "80": {
+  "enum": "BadgeCaptureSmallPokemon",
+  "title": "Tiny Pokémon Collector",
+  "titled": true
+ },
+ "81": {
+  "enum": "BadgeCaptureLargePokemon",
+  "title": "Jumbo Pokémon Collector",
+  "titled": true
+ },
+ "82": {
+  "enum": "BadgePokedexEntriesGen9",
+  "title": "Paldea",
+  "titled": true
+ },
+ "83": {
+  "enum": "BadgePartyChallengesCompleted",
+  "title": "Life of the Party",
+  "titled": true
+ },
+ "85": {
+  "enum": "BadgeCheckIns",
+  "title": "Community Member",
+  "titled": true
+ },
+ "87": {
+  "enum": "BadgeBreadBattlesWon",
+  "title": "Bread Battles Won",
+  "titled": false
+ },
+ "88": {
+  "enum": "BadgeBreadBattlesDoughWon",
+  "title": "Bread Battles Dough Won",
+  "titled": false
+ },
+ "1002": {
+  "enum": "BadgeMiniCollection",
+  "title": "Elite Collector",
+  "titled": true
+ },
+ "1003": {
+  "enum": "BadgeButterflyCollector",
+  "title": "Vivillon Collector",
+  "titled": true
+ },
+ "1004": {
+  "enum": "BadgeMaxSizeFirstPlaceWin",
+  "title": "Showcase Star",
+  "titled": true
+ },
+ "5072": {
+  "enum": "BadgeGofest2020Global",
+  "title": "Pokémon GO Fest",
+  "titled": true
+ },
+ "5231": {
+  "enum": "BadgeLevel40",
+  "title": "Legacy 40",
+  "titled": true
+ }
+}
