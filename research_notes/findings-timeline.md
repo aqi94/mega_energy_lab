@@ -263,3 +263,39 @@ straight through unless you're doing a deep dive on one issue.
     within 0.04 overall. Read the glow as "pale, near-neutral". Estimates from a lossy thumbnail, not dumped values; the old
     material had a dark, low-key ramp lifted by a stronger mid-tone curve, where today's is pink / navy / periwinkle / white.
     Renders: `renders/GO_Mega_Energy_legacy_{joint,colours,compare}.png`.
+34. **Chandelure gets a reference; the APK's 256 px template is not the source of the 128 px copy (2026-10-13, user:
+    "the standard for Chandelure Energy is in raw/chandelure_energy_standard.png").** The standard is a 501×229 white-background
+    UI composite with the candy about 67 px wide, so it went in as **bronze** (`raw/standards/bronze/GO_Chandelure_Mega_Energy.png`).
+    `clean_screenshot.py` assumes a bright candy on a dimmed screen; it was run with a far-from-white segmentation, the crop
+    upsampled 4×, and **no mesh warp** (an 8×8 mesh smeared the emblem at this size; an emblem-only similarity search lands on the
+    silhouette's pose — 0.4°, scale 0.997, IoU 0.984 — so the affine is enough). `fit_final.js`: **RMSE 32.1 (generic) → 10.8**
+    (the inferred estimate scored 30.2), stops 0.133 / 0.536 / 0.664 / 0.963, `_GlassTint` 0 (glass mode a tie), glow 0.70,
+    glow colour 0.74, curve 0.173. A cloud session's independent cleaning of the same screenshot gave 11.0 with nearly the same
+    stops. The inference regression was not re-run for this one extra bronze fit. Separately, the template texture (pathID 462)
+    was re-extracted from the 0.429.1 APK: **ASTC 6×6** (block edges visible in R, B and weakly G), identical to
+    `apk_research/template_from_apk.png`, upright after UnityPy's flip. Downscaled to 128 it does **not** reproduce the repo's copy:
+    R / B agree (RMSE ≈ 5 / 1 inside the icon, bilinear best) but **G (the outline) is drawn differently** — at 256 a thin ring on
+    the silhouette's edge, strongest bottom-left; in the 128 copy a wider, more even ring about 1 px further in (RMSE ≈ 12 under every
+    filter). The 128 px copy is older or separately authored art. Every fit so far used the 128 copy, so `_GlowColorIntensity` (the
+    one float the outline drives, and the one that keeps hitting its bound) may be compensating for the wrong G. Tested in #35.
+35. **The 256 px texture becomes the base; full refit; gold retired (2026-10-13, user: "with the new 256x256 definition, we will
+    go with this image as the base going forward … do a thorough refitting … then re-extrapolate").** The lab now embeds the APK
+    texture as raw RGBA (`scripts/embed_template.py`), shades every texel, averages each 2×2 block premultiplied onto the 128 px
+    reference grid (a 2:1 area downscale of the game's render — how the references were made) and exports at 256. Python
+    (`shade_mega_candy.py`, `clean_screenshot.py`) does the same; lab and Python agree within 0.1 RMSE wherever their copies of a
+    reference agree (22 of the lab's embedded references were warped or resized by the original tooling and differ from their
+    files; the embedded ones are what every fit uses). **Refit of all 63 references** (`fit_final.js`, 12 shards, ~5 min per
+    species): mean 9.14 → 9.34, but split by reference kind it is **−0.13 for the 11 cleaned in-game screenshots** (9 of 11
+    better; Blastoise −0.44) and **+0.28 for the rest**, which had been warped onto the old copy's outline — the 256 texture is
+    the truer template. **Eight references replaced by cleaned in-game screenshots** (user uploads; one sub-agent each, default
+    `clean_screenshot.py` settings won every time — grid 6/8/10 and smooth 0.05–0.3 changed the fit by < 0.1; bounce = rotation
+    up to ~15° plus mild skew, mesh ≤ 2 template px): Heracross 7.49 → 6.25, Sableye 6.10 → 5.37, Mawile 4.57 → 3.59, Medicham
+    6.09 → 5.58, Pinsir 5.27 → 4.29, and the three gold thumbnails Manectric 11.57 → 5.50, Houndoom 9.13 → 4.29, Altaria 10.84 →
+    4.66. The gold fits had looked fine on RMSE but sat on bounds (Houndoom `_Stop1` 0 / glow 0.44 / curve 0.09, Altaria glow
+    colour 0, Manectric `_Stop4` 1 / curve 0.108); with screenshots every float is ordinary (curve 0.155–0.168). Houndoom's
+    `_Stop1` = 0 "outlier cohort" was the thumbnail. The thumbnails moved to `raw/standards/legacy/*_gold_thumbnail.png`; **the
+    gold tier is empty** (the lab disables its "Gold refs" fit target). Final: 63 fitted (54 silver / 9 bronze, 19 screenshots),
+    mean 9.00; 37 ≤ 10, 58 ≤ 15, the same five above 15 (Aerodactyl, Gallade, Ampharos, Falinks, Alakazam). **Constants
+    unchanged** (medians: curve 0.158, tint 0.087, glow 0.770, Stop4 0.871, glow colour 0.60; lock test: curve med Δ 0.08 with 47 of
+    63 < 0.5; tint adds ~0.4, borderline near-constant / probable), so the inference constants stay 0.15 / 0.1 / 0.77 / 0.87 / 0.5.
+    Re-extrapolated the 33 unreferenced entries: LOO 18.68 vs generic 24.80 (was 18.7 vs 24.7); their stops moved ≤ 0.056.

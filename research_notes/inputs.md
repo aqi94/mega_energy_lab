@@ -5,8 +5,9 @@
 > `_GlowColor`, the JSON is a Material dump, `_EmissionColor` is a stale leftover. **Wrong below:** B does
 > not tint toward `_Color` (it lerps toward white; `_Color` multiplies the whole icon), `_EmissionColor`
 > is not a shading term (the shader never reads it), and `_GlowColor` is not a directional light (the
-> positional hue is a per-channel UV "glass" gradient). The APK's template is 256×256; the copy here is
-> 128×128. The material also carries floats the JSON lacks: `_Stop1..4`, `_GlassColor`, `_GlassTint`,
+> positional hue is a per-channel UV "glass" gradient). The APK's template is 256×256 and is the lab's base since
+> 2026-10-13 (`raw/pokemon_details_mega_candy_256.png`, finding #34); the 128×128 copy described below has a differently
+> drawn outline and is kept only for history. The material also carries floats the JSON lacks: `_Stop1..4`, `_GlassColor`, `_GlassTint`,
 > `_GlowIntensity`, `_GlowColorIntensity`, `_BrightnessCurve`.
 
 ## `raw/pokemon_details_mega_candy.png` (128×128 RGBA)

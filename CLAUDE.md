@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Mission
 **Determine the actual algorithm Niantic uses to tint the Mega Energy candy icon**
-(`raw/pokemon_details_mega_candy.png`, a grayscale template whose R/G/B channels each play a
+(`raw/pokemon_details_mega_candy_256.png`, the game's 256 px grayscale template whose R/G/B channels each play a
 different structural role) into the per-species icon seen in-game, using
 `raw/PokemonMegaCandyAkaMegaEnergy.json` (color data mined from the game by PokeMiners) as the only
 other input. Until 2026-09-20 everything here was inferred by fitting rendered output against real
@@ -72,7 +72,9 @@ judgement (see `research_notes/findings-timeline.md` for the evidence behind eac
 8. **Trust cleaned in-game screenshots most; treat wiki / blog thumbnails with caution.** The old "gold" tier turned out to
    be ImageMagick thumbnails of older game builds (finding #28: Venusaur's differed from its screenshot by RMSE 38 and
    wanted `_BrightnessCurve` 0 instead of 0.17). Check a reference's PNG metadata before weighting it, and do not let
-   thumbnails drive constants (`research_notes/reference-tiers.md` predates this).
+   thumbnails drive constants (`research_notes/reference-tiers.md` predates this). On 2026-10-13 the last three gold
+   thumbnails were replaced by screenshots (finding #35): the gold tier is now empty and the thumbnails sit in
+   `raw/standards/legacy/`. A thumbnail can fit well on RMSE while pushing floats onto their bounds — check the floats too.
 9. **A single shared formula across all species tops out far worse (RMSE ~24–30) than fitting each
    species individually (RMSE ~10–18).** Per-species variation is real signal, not noise — don't
    assume one fixed set of constants should work everywhere. (Now explained: every species has its own
@@ -110,7 +112,7 @@ There is no build step. Open `mega_lab.html` directly in a browser — double-cl
   base and stripe colours (hex or colour input; `_ColorB` stays the material's white). Reset to family, Swap base ↔
   stripe (the two possible channel mappings), Copy JSON. Remembered in `localStorage megaLab.candy`.
 - **Output folder… / Save PNG / Render all…** (top toolbar) — renders the current shader +
-  parameters to a real PNG, named like the reference images
+  parameters to a real 256 × 256 PNG (the texture's native size), named like the reference images
   (`GO_<Species>_Mega_Energy[_X|_Y|_Z].png`). "Save PNG" does the current entry; "Render all…" does
   all 96. On the Candy tab the same buttons save Bulbapedia-style names: `GO <Species> Candy.png` (the small icon),
   `GO <Species> Candy artwork.png` (the full-size art) and `GO <Species> Candy XL.png` (custom colours:
@@ -151,8 +153,8 @@ Estimating the unknown floats (refit, replace a reference, constants / cohorts, 
   (never print that line; search by function name). The shader is `MODELS.megaCandy`; keep its maths
   identical to `research_notes/shader-source.md`.
 - `raw/` — the source inputs the page was built from, kept for provenance and reproducibility:
-  - `pokemon_details_mega_candy.png` — the grayscale RGB-channel template art (see "Universal rules"
-    for what each channel means).
+  - `pokemon_details_mega_candy_256.png` — the grayscale RGB-channel template art, the APK's own 256 px texture (see
+    "Universal rules" for what each channel means). `pokemon_details_mega_candy.png` is PokeMiners' older 128 px copy (unused).
   - `PokemonMegaCandyAkaMegaEnergy.json` — the game's own per-species target ramp colors, keyed by
     dex number (plus `_MEGA_X`/`_MEGA_Y`/`_MEGA_Z`/`_Mega_Z` suffixes for multi-form Megas).
   - `names.json` — dex number → species name, used only to label entries and to build export
@@ -177,7 +179,15 @@ Estimating the unknown floats (refit, replace a reference, constants / cohorts, 
 ## Scope notes
 - The shader maths is documented in `research_notes/shader-source.md`; the page's own UI (the "Render
   pipeline at this pixel" breakdown, the Shader components grid, slider tooltips) shows it per pixel.
-- The lab renders at the repo's 128 px template and uses the shader's own alpha
-  (`sat(A + G·_GlowColorIntensity)·A`). The APK's template is 256 px; it is not embedded.
+- **The template is the game's own 256 px texture** (`raw/pokemon_details_mega_candy_256.png`, APK 0.429.1 pathID 462,
+  ASTC 6×6; since 2026-10-13 — finding #34). It is embedded as raw RGBA bytes (`<script id="lab-template">`, written by
+  `python scripts/embed_template.py`; a PNG would lose the outline's low-alpha texels to the canvas's premultiply). The
+  lab shades every texel, averages each 2×2 block premultiplied onto the 128 px grid the references live on (scores,
+  fits, panels), and exports at the native 256 px. Probes / feature maps read the 2×2-averaged texel. The old 128 px
+  `raw/pokemon_details_mega_candy.png` (PokeMiners' copy, a differently drawn outline) is no longer used. The shader's
+  own alpha is `sat(A + G·_GlowColorIntensity)·A`. `scripts/shade_mega_candy.py` does the same (`reduce2`, `template128`).
+- 22 of the lab's embedded references are not byte-identical to their files in `raw/standards/` (six larger screenshots,
+  sixteen warped onto the template when the lab was first built). The embedded copies are what every fit used; Python's
+  cross-check differs on exactly those (by up to ~2 RMSE) and agrees within 0.1 elsewhere.
 - To test a page change without the browser extension: serve the folder (`python -m http.server`) and drive
   headless Edge over its debugging port — file URLs and clicks both work that way.

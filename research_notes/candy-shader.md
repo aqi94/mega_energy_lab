@@ -72,7 +72,7 @@ in-game screenshot with a candy in it, or Il2CppDumper + Ghidra on `PokemonCandy
 
 ## Reproducing this
 
-Local tooling in the gitignored `raw_data/pogo_apk/` of the private checkout: `scan_candy.py` (finds the material,
+Local tooling in the gitignored `apk_research/` of the private checkout: `scan_candy.py` (finds the material,
 resolves its shader through the externals table, lists the candy textures / sprites and the C# names, exports the APK's
 `candy_rgb` texture → `scan_candy.json`, `candy_rgb_from_apk.png`) and
 `extract_shader.py "NianticCustom/UI/TriColorSplat" tricolorsplat` (LZ4-decompresses the shader blob and cuts the

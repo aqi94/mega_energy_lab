@@ -13,7 +13,7 @@ Pokémon GO 0.429.1 (Android, Unity 6000.0.53f1, URP, IL2CPP, Gamma colour space
 
 | Thing | Where | What |
 |---|---|---|
-| `Niantic.Holoholo.BadgeMaterialConfig` | `sharedassets1.assets` pathID **162909** (a MonoBehaviour; its typetree is unreadable, the bytes were decoded from the metadata's field order — `raw_data/pogo_apk/extract_badge_config.py`) | the tier palette + the per-medal accent colours, below |
+| `Niantic.Holoholo.BadgeMaterialConfig` | `sharedassets1.assets` pathID **162909** (a MonoBehaviour; its typetree is unreadable, the bytes were decoded from the metadata's field order — `apk_research/extract_badge_config.py`) | the tier palette + the per-medal accent colours, below |
 | `BadgeRank` | enum in `global-metadata.dat` | NONE 0 · BRONZE 1 · SILVER 2 · GOLD 3 · PLATINUM 4 |
 | `HoloBadgeType` | enum in `global-metadata.dat` (1374 values, C#-style names: `BadgeUnown` = 38, `BadgeCaptureSmallPokemon` = 80 …) | the number in `Badge_<n>.png` (sprite-name format `Badge_{0}` / `Badge_Inset_{0}` in the code) |
 | `BadgeService` | pathID 110668 | asset addresses only: rings `badge_ring_1…4` (one per tier), frames `badge_frame_0…12`, pin `badge_pin_0`, `tx_badge_sparkles`, materials **`ma_Badge`** (normal frame) / **`ma_Badge_UseFrameColor`** (colourised frame) |
@@ -155,7 +155,7 @@ sit in native code: `RouteBadgeColor`, `badgeFrameColors`, `badgeHeaderColors`).
 
 ## Reproducing this
 
-- `raw_data/pogo_apk/extract_badge_config.py` (private checkout, beside `scan_candy.py`): reads pathID 162909, the two
+- `apk_research/extract_badge_config.py` (private checkout, beside `scan_candy.py`): reads pathID 162909, the two
   enums (IL2CPP v31: 88-byte type definitions, zigzag-compressed default values) and PokeMiners' `English.txt`, and
   writes `raw/medals/BadgeMaterialConfig.json` + `names.json`.
 - `scripts/fit_medals.py`: the alignment, the fit, the scores, the aligned reference cut-outs

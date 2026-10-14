@@ -24,16 +24,15 @@ that the shader reads (`_Stop1`–`_Stop4`, `_GlassColor`, `_GlassTint`, `_GlowI
 `_GlowColorIntensity`, `_BrightnessCurve`). Those live in a downloadable bundle nobody has dumped, and the
 public data only has the colors. So the numbers were **fitted** to the in-game reference images:
 [`raw/MegaCandyMaterialFloats.json`](raw/MegaCandyMaterialFloats.json) holds an estimate for all 96
-entries (62 fitted, 34 guessed), and the lab starts every entry from it. They are estimates, not the game's real values.
+entries (63 fitted, 33 guessed), and the lab starts every entry from it. They are estimates, not the game's real values.
 
 | | species | error with the generic material | error with the fitted estimate |
 |---|---|---|---|
-| gold references | 3 | 31.0 | 10.3 |
-| silver references | 51 | 23.6 | 9.0 |
-| bronze references | 8 | 29.4 | 9.2 |
+| silver references | 54 | 24.0 | 8.9 |
+| bronze references | 9 | 29.7 | 9.7 |
 
-Error is RMSE in 0–255 color levels over the pixels both images cover; about 7 is the noise floor. 35
-species fit within 10, 57 within 15, and 5 are still above 15: Aerodactyl, Gallade, Ampharos,
+Error is RMSE in 0–255 color levels over the pixels both images cover; about 7 is the noise floor. 37
+species fit within 10, 58 within 15, and 5 are still above 15: Aerodactyl, Gallade, Ampharos,
 Alakazam and Falinks. Neighbouring stops are kept at least 0.1 apart in every fit (that costs almost
 nothing: 0.06 RMSE on average).
 
@@ -44,7 +43,7 @@ identified (it mostly sits just above `_Stop3`). `_GlowColorIntensity` can't be 
 and `_GlassColor` is a per-species switch. The
 JSON lists a verdict for each.
 
-**The 34 entries with no reference image** get a guess: the constants above plus stop positions predicted
+**The 33 entries with no reference image** get a guess: the constants above plus stop positions predicted
 from the entry's own ramp colors. Tested by leaving each referenced species out in turn, that guess
 averages an error of about 19, against 25 for the generic material. Treat it as a starting point.
 
@@ -53,10 +52,16 @@ Beedrill, Gengar, Lopunny, Pidgeot) were replaced with cleaned-up in-game screen
 did not match the in-game render — and all ten then fit at 4–6, right at the noise floor. The old Venusaur
 "gold" image differed from its screenshot by 38 RMSE (saturated teal against pale pastel), and fitting the
 screenshot moved `_BrightnessCurve` from 0 to 0.17. The old images were wiki thumbnails made with
-ImageMagick in 2020–21, i.e. renders from older builds of the game. Seven such thumbnails remain (Altaria,
-Houndoom, Manectric, Charizard, Abomasnow, Ampharos, Gyarados); their fitted `_BrightnessCurve` is around 0.09
-where every in-game screenshot gives 0.14–0.17. They and the remaining poor fits are the first candidates
-for replacement.
+ImageMagick in 2020–21, i.e. renders from older builds of the game. On 2026-10-13 eight more were replaced by
+cleaned in-game screenshots — the three "gold" thumbnails (Altaria, Houndoom, Manectric; kept in
+`raw/standards/legacy/`) and five old-tooling images (Heracross, Mawile, Medicham, Pinsir, Sableye) — and fit at
+3.6–6.3; Houndoom's odd `_Stop1` = 0 and Manectric's `_Stop4` = 1 went away with the thumbnails. There is no gold tier
+any more. Thumbnails still remain for Charizard, Abomasnow, Ampharos and Gyarados; they and the poor fits are the
+next candidates for replacement.
+
+**The template is the game's own 256 px texture** (since 2026-10-13), shaded per texel and averaged 2×2 onto the
+128 px references; renders export at 256 px. Against it the 19 screenshot references fit better than with the old
+128 px copy, the rest slightly worse (they had been warped onto the old copy's outline).
 
 ## Using the lab
 
